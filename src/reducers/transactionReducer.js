@@ -15,7 +15,7 @@ export const initializeTransactions = () => {
       const transactions = await transactionsService.getAll()
       dispatch ({
         type: 'INIT_TRANSACTION',
-      data: transactions,
+        data: transactions,
       })
     }
   }

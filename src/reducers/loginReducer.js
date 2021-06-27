@@ -14,21 +14,24 @@ const loginReducer = (state = null, action) =>{
     return state
 }
 
-export const login = (username, password) => {
+export const login = (username, password, cb) => {
     return async dispatch => {
       try {
+        
         const user = await loginService.login({
             username, password,
         })
         window.localStorage.setItem(
             "loggedUser", JSON.stringify(user)
         )
+        
         dispatch ({
           type: 'LOGIN',
           data: user,
         })
+        cb()
           } catch (exception) {
-              alert("wrong username or password")
+              console.log(exception)
           }   
     }
   }
@@ -42,11 +45,15 @@ export const localLogin = (user) => {
   )
 }
 
-export const logout = () => {
+export const logout = (cb) => {
   return ( dispatch =>
-    {dispatch ({
+    {
+      window.localStorage.clear()
+      dispatch ({
       type: "LOGOUT"
-    })}
+      })
+      cb()
+    }
   )
 }
 

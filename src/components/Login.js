@@ -1,21 +1,24 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { login } from '../reducers/loginReducer'
+import { useHistory } from 'react-router'
 
 const Login = () =>{
     const dispatch = useDispatch()
+    const history = useHistory()
     const handleLogin = (event) =>{
         event.preventDefault()
         const username = event.target.Username.value
         const password = event.target.Password.value
-        dispatch(login(username,password))
+        const cb = () => history.push("/")
+        dispatch(login(username,password, cb))
     }
     return (
         <div>
             <h2>Log in to application</h2>
             <form onSubmit={handleLogin}>
                 <div>
-      username
+      Username 
                     <input
                         type="text"
                         name="Username"
@@ -23,14 +26,14 @@ const Login = () =>{
                     />
                 </div>
                 <div>
-      password
+      Password 
                     <input
                         type="password"
                         name="Password"
                         id="password"
                     />
                 </div>
-                <button type="submit">login</button>
+                <button type="submit">Login</button>
             </form>
         </div>
     )
