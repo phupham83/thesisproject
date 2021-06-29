@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { logout} from '../reducers/loginReducer'
+import { logout} from '../reducers/userReducer'
 import { useHistory } from 'react-router'
 
 const Logout = () => {

@@ -5,8 +5,9 @@ import Transaction from "./components/Transaction"
 import Login from "./components/Login"
 import Logout from "./components/Logout"
 import SignUp from "./components/SignUp"
+import Accounts from "./components/Accounts"
 import { initializeTransactions } from "./reducers/transactionReducer"
-import { localLogin  } from './reducers/loginReducer'
+import { localLogin  } from './reducers/userReducer'
 
 import {
   BrowserRouter as Router,
@@ -62,12 +63,16 @@ return (
         <Router>
             <div>
                 <Link style={padding} to="/transactions">Transactions</Link>
+                <Link style={padding} to="/accounts">Accounts</Link>
                 <Link style={padding} to="/">Home</Link>
                 <p>{user.username} logged in <Logout /></p>
             </div>
             <Switch>
                 <Route path ="/transactions">
                     <Transaction />
+                </Route>
+                <Route path = "/accounts">
+                    <Accounts />
                 </Route>
                 <Route exact path ="/">
                     <h1>Welcome to your budget planner</h1>
