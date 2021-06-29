@@ -3,14 +3,20 @@ import userService from "../services/users"
 const userReducer = (state = null, action) =>{
     switch (action.type) {
         case "LOGIN":
-            return action.data
+          return action.data
         case "LOCAL_LOGIN":
-            return action.data
+          return action.data
         case "LOGOUT":
-            return null
+          return null
         case "SIGN_UP":
-            console.log(action.data)
-            return state
+          console.log(action.data)
+          return state
+        case "GET_CONSENT":
+          console.log(action.data)
+          return state
+        case "GET_ACCOUNTS":
+          const newState = {...state, accounts: action.data}
+          return newState
         default:
             console.log("")
     }
@@ -74,6 +80,46 @@ export const signup = (username, name, password,cb) =>{
       } catch (e) {
           console.log(e)
       }
+  }
+}
+
+export const getConsent = (id)=>{
+  return async dispatch =>{
+    try {
+      const response = await userService.getConsent(id)
+      dispatch({
+        type: "GET_CONSENT",
+        data: response
+      })
+    } catch (e) {
+      console.log(e)
+    }
+  }
+}
+
+export const getAccounts = (user) => {
+  if(user.consent){
+  return async dispatch =>{
+    try {
+      const response = await userService.getAccounts(user.id)
+      dispatch({
+        type: "GET_ACCOUNTS",
+        data: response
+      })
+    } catch (e) {
+      console.log(e)
+    }
+  }} else{
+    return async dispatch =>{
+      try {
+        const response = []
+        dispatch({
+          type: "GET_ACCOUNTS",
+          data: response
+        })
+      } catch (e) {
+        console.log(e)
+      }}
   }
 }
 

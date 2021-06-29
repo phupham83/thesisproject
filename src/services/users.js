@@ -11,4 +11,15 @@ const signup = async credentials => {
     return respone.data
 }
 
-export default { login, signup }
+const getConsent = async id => {
+    await axios.get("/api/obpApi/connect")
+    const response = await axios.put("/api/obpApi/save/" + id)
+    return response.data
+}
+
+const getAccounts = async id =>{
+    const response = await axios.get("/api/obpApi/getMyAccounts/" + id)
+    return response.data
+}
+
+export default { login, signup, getConsent, getAccounts }

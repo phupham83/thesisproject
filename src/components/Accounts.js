@@ -1,20 +1,28 @@
-import React from "react"
-import { useSelector } from "react-redux"
+import React, {useEffect} from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { getConsent, getAccounts } from "../reducers/userReducer"
 
 const Accounts = () => {
+    const dispatch = useDispatch()
     const user = useSelector(state => state.user)
-    const handleAccount = (event) =>{
+    useEffect(()=>{
+        dispatch(getAccounts(user))
+    }, [dispatch])
+    const handleAccountAuth = (event) =>{
         event.preventDefault()
+        dispatch(getConsent(user.id))
     }
     return(
         <div>
             <h1>Accounts</h1>
             {user.consent ? 
-            <p>Hello world!</p>
+                <div>
+                    {user.accounts}
+                </div>
             :
             <div>
                 <p>Please add an account to start</p>
-                <button onSubmit ={handleAccount}>Add account</button>
+                <button onSubmit ={handleAccountAuth}>Add account</button>
             </div>  
         }
         </div>
