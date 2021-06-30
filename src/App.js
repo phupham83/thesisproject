@@ -5,6 +5,7 @@ import Transaction from "./components/Transaction"
 import Login from "./components/Login"
 import Logout from "./components/Logout"
 import SignUp from "./components/SignUp"
+import Consent from "./components/Consent"
 import Accounts from "./components/Accounts"
 import { initializeTransactions } from "./reducers/transactionReducer"
 import { localLogin  } from './reducers/userReducer'
@@ -73,6 +74,9 @@ return (
                 </Route>
                 <Route path = "/accounts">
                     <Accounts />
+                </Route>
+                <Route path = "/consent">
+                    <Consent/>
                 </Route>
                 <Route exact path ="/">
                     <h1>Welcome to your budget planner</h1>

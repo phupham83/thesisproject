@@ -8,6 +8,7 @@ const Accounts = () => {
     useEffect(()=>{
         dispatch(getAccounts(user))
     }, [dispatch])
+    
     const handleAccountAuth = (event) =>{
         event.preventDefault()
         dispatch(getConsent(user.id))
@@ -15,14 +16,14 @@ const Accounts = () => {
     return(
         <div>
             <h1>Accounts</h1>
-            {user.consent ? 
+            {user.consent[0] ? 
                 <div>
                     {user.accounts}
                 </div>
             :
             <div>
                 <p>Please add an account to start</p>
-                <button onSubmit ={handleAccountAuth}>Add account</button>
+                <button onClick ={handleAccountAuth}>Add account</button>
             </div>  
         }
         </div>

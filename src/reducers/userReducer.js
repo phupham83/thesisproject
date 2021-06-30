@@ -14,6 +14,9 @@ const userReducer = (state = null, action) =>{
         case "GET_CONSENT":
           console.log(action.data)
           return state
+        case "CONFIRM_CONSENT":
+          console.log(action.data)
+          return state
         case "GET_ACCOUNTS":
           const newState = {...state, accounts: action.data}
           return newState
@@ -83,10 +86,10 @@ export const signup = (username, name, password,cb) =>{
   }
 }
 
-export const getConsent = (id)=>{
+export const getConsent = ()=>{
   return async dispatch =>{
     try {
-      const response = await userService.getConsent(id)
+      const response = await userService.getConsent()
       dispatch({
         type: "GET_CONSENT",
         data: response
@@ -112,7 +115,7 @@ export const getAccounts = (user) => {
   }} else{
     return async dispatch =>{
       try {
-        const response = []
+        const response = null
         dispatch({
           type: "GET_ACCOUNTS",
           data: response
@@ -120,6 +123,21 @@ export const getAccounts = (user) => {
       } catch (e) {
         console.log(e)
       }}
+  }
+}
+
+export const confirmConsent = (id, cb) =>{
+  return async dispatch => {
+    try {
+      const response = await userService.confirmConsent(id)
+      dispatch({
+        type: "CONFIRM_CONSENT",
+        data: response
+      })
+      cb()
+    } catch (e) {
+      console.log(e)
+    }
   }
 }
 
