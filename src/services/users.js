@@ -6,6 +6,16 @@ const login = async credentials => {
     return response.data
 }
 
+const localLogin = async () => {
+    const response = await axios.get(baseUrl + "/local_login")
+    return response.data
+}
+
+const logOut = async () => {
+    const response = await axios.get(baseUrl + "/logout")
+    return response.data
+}
+
 const signup = async credentials => {
     const respone = await axios.post("/api/users", credentials)
     return respone.data
@@ -16,14 +26,9 @@ const getConsent = () => {
     window.location.href = "/api/obpApi/connect"
 }
 
-const confirmConsent = async id =>{
-    const response = await axios.put("/api/obpApi/save/" + id)
+const getAccounts = async () =>{
+    const response = await axios.get("/api/obpApi/getMyAccounts/")
     return response.data
 }
 
-const getAccounts = async id =>{
-    const response = await axios.get("/api/obpApi/getMyAccounts/" + id)
-    return response.data
-}
-
-export default { login, signup, getConsent, getAccounts, confirmConsent }
+export default { login, signup, getConsent, getAccounts, localLogin, logOut }

@@ -1,16 +1,15 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { confirmConsent } from "../reducers/userReducer"
-import { Redirect,useHistory } from 'react-router'
+import { getConsent } from "../reducers/userReducer"
+import { Redirect} from 'react-router'
 
 const Consent = () =>{
     const dispatch = useDispatch()
-    const history = useHistory()
     const user = useSelector(state => state.user)
-    const cb = () => history.push("/")
+    
     const handleConfirm =(event) =>{
-    event.preventDefault()
-    dispatch(confirmConsent(user.id, cb))
+        event.preventDefault()
+        dispatch(getConsent())
     }
     return(
         <div>

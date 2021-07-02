@@ -7,7 +7,6 @@ import Logout from "./components/Logout"
 import SignUp from "./components/SignUp"
 import Consent from "./components/Consent"
 import Accounts from "./components/Accounts"
-import { initializeTransactions } from "./reducers/transactionReducer"
 import { localLogin  } from './reducers/userReducer'
 
 import {
@@ -18,16 +17,8 @@ import {
 const App = () =>{
   const dispatch = useDispatch()
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem("loggedUser")
-    if (loggedUserJSON) {
-        const user = JSON.parse(loggedUserJSON)
-        dispatch(localLogin(user))
-    }
-  }, [dispatch])
-
-  useEffect(() => {
-    dispatch(initializeTransactions())
-  }, [dispatch])
+        dispatch(localLogin())
+    }, [dispatch])
 
   const user = useSelector(state => state.user)
 

@@ -1,9 +1,11 @@
 import React, {useEffect} from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { getConsent, getAccounts } from "../reducers/userReducer"
+import {  getAccounts } from "../reducers/userReducer"
+import { useHistory } from 'react-router'
 
 const Accounts = () => {
     const dispatch = useDispatch()
+    const history = useHistory()
     const user = useSelector(state => state.user)
     useEffect(()=>{
         dispatch(getAccounts(user))
@@ -11,7 +13,7 @@ const Accounts = () => {
     
     const handleAccountAuth = (event) =>{
         event.preventDefault()
-        dispatch(getConsent(user.id))
+        history.push("/consent")
     }
     return(
         <div>

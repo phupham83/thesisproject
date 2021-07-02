@@ -14,9 +14,6 @@ const userReducer = (state = null, action) =>{
         case "GET_CONSENT":
           console.log(action.data)
           return state
-        case "CONFIRM_CONSENT":
-          console.log(action.data)
-          return state
         case "GET_ACCOUNTS":
           const newState = {...state, accounts: action.data}
           return newState
@@ -33,9 +30,6 @@ export const login = (username, password, cb) => {
         const user = await userService.login({
             username, password,
         })
-        window.localStorage.setItem(
-            "loggedUser", JSON.stringify(user)
-        )
         
         dispatch ({
           type: 'LOGIN',
@@ -48,9 +42,11 @@ export const login = (username, password, cb) => {
     }
   }
 
-export const localLogin = (user) => {
-  return ( dispatch =>
-    {dispatch ({
+export const localLogin = () => {
+  return ( async dispatch =>
+    {
+      const user = await userService.localLogin()
+      dispatch ({
       type: "LOCAL_LOGIN",
       data: user
     })}
@@ -58,9 +54,9 @@ export const localLogin = (user) => {
 }
 
 export const logout = (cb) => {
-  return ( dispatch =>
+  return ( async dispatch =>
     {
-      window.localStorage.clear()
+      await userService.logOut()
       dispatch ({
       type: "LOGOUT"
       })
@@ -126,19 +122,5 @@ export const getAccounts = (user) => {
   }
 }
 
-export const confirmConsent = (id, cb) =>{
-  return async dispatch => {
-    try {
-      const response = await userService.confirmConsent(id)
-      dispatch({
-        type: "CONFIRM_CONSENT",
-        data: response
-      })
-      cb()
-    } catch (e) {
-      console.log(e)
-    }
-  }
-}
 
 export default userReducer

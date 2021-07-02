@@ -1,8 +1,11 @@
-import React from "react"
-import { useSelector } from 'react-redux'
-
+import React, { useEffect } from "react"
+import { useDispatch,useSelector } from 'react-redux'
+import { initializeTransactions } from "../reducers/transactionReducer"
 const Transaction = () => {
-    
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(initializeTransactions())
+      }, [dispatch])
     const transactions = useSelector(state => state.transactions)
     
     return(
