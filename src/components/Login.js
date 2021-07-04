@@ -1,12 +1,12 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
-import { login } from '../reducers/userReducer'
-import { useHistory } from 'react-router'
+import React from "react"
+import { useDispatch } from "react-redux"
+import { login } from "../reducers/userReducer"
+import { useHistory } from "react-router"
 
-const Login = () =>{
+const Login = () => {
     const dispatch = useDispatch()
     const history = useHistory()
-    const handleLogin = (event) =>{
+    const handleLogin = (event) => {
         event.preventDefault()
         const username = event.target.Username.value
         const password = event.target.Password.value
@@ -18,7 +18,7 @@ const Login = () =>{
             <h2>Log in to application</h2>
             <form onSubmit={handleLogin}>
                 <div>
-      Username 
+      Username
                     <input
                         type="text"
                         name="Username"
@@ -26,7 +26,7 @@ const Login = () =>{
                     />
                 </div>
                 <div>
-      Password 
+      Password
                     <input
                         type="password"
                         name="Password"

@@ -26,7 +26,7 @@ const getConsent = () => {
     window.location.href = "/api/obpApi/connect"
 }
 
-const getAccounts = async () =>{
+const getAccounts = async () => {
     const response = await axios.get("/api/obpApi/getMyAccounts/")
     return response.data
 }

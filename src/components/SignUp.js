@@ -1,12 +1,12 @@
 import React from "react"
-import { useDispatch } from 'react-redux'
-import { useHistory } from 'react-router'
+import { useDispatch } from "react-redux"
+import { useHistory } from "react-router"
 import { signup } from "../reducers/userReducer"
 
-const SignUp = () =>{
+const SignUp = () => {
     const dispatch = useDispatch()
     const history = useHistory()
-    const handleSignup = (event)=>{
+    const handleSignup = (event) => {
         event.preventDefault()
         const username = event.target.Username.value
         const password = event.target.Password.value
