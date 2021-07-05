@@ -2,6 +2,8 @@ import React from "react"
 import { useDispatch } from "react-redux"
 import { useHistory } from "react-router"
 import { signup } from "../reducers/userReducer"
+import { setMessage } from "../reducers/messageReducer"
+import Message from "./Message"
 
 const SignUp = () => {
     const dispatch = useDispatch()
@@ -12,10 +14,12 @@ const SignUp = () => {
         const password = event.target.Password.value
         const name = event.target.Name.value
         const cb = () => history.push("/")
-        dispatch(signup(username, name, password, cb))
+        const messageCb = (message) => {dispatch(setMessage(message))}
+        dispatch(signup(username, name, password, cb, messageCb))
     }
     return (
         <div>
+            <Message />
             <h2>Sign up for the application</h2>
             <form onSubmit ={handleSignup}>
                 <div>

@@ -24,14 +24,12 @@ const userReducer = (state = null, action) => {
     return state
 }
 
-export const login = (username, password, cb) => {
+export const login = (username, password, cb, messageCb) => {
     return async dispatch => {
         try {
-
             const user = await userService.login({
                 username, password,
             })
-
             dispatch ({
                 type: "LOGIN",
                 data: user,
@@ -39,6 +37,7 @@ export const login = (username, password, cb) => {
             cb()
         } catch (exception) {
             console.log(exception)
+            messageCb("Wrong username or password")
         }
     }
 }
@@ -66,7 +65,7 @@ export const logout = (cb) => {
     )
 }
 
-export const signup = (username, name, password,cb) => {
+export const signup = (username, name, password,cb, messageCb) => {
     return async dispatch => {
         try {
             const response = await userService.signup({
@@ -79,6 +78,7 @@ export const signup = (username, name, password,cb) => {
             cb()
         } catch (e) {
             console.log(e)
+            messageCb(e.response.data.error)
         }
     }
 }

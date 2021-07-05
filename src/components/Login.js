@@ -2,6 +2,8 @@ import React from "react"
 import { useDispatch } from "react-redux"
 import { login } from "../reducers/userReducer"
 import { useHistory } from "react-router"
+import { setMessage } from "../reducers/messageReducer"
+import Message from "./Message"
 
 const Login = () => {
     const dispatch = useDispatch()
@@ -11,10 +13,13 @@ const Login = () => {
         const username = event.target.Username.value
         const password = event.target.Password.value
         const cb = () => history.push("/")
-        dispatch(login(username,password, cb))
+        const messageCb = (message) => {dispatch(setMessage(message))}
+        dispatch(login(username,password, cb, messageCb))
     }
+
     return (
         <div>
+            <Message />
             <h2>Log in to application</h2>
             <form onSubmit={handleLogin}>
                 <div>
