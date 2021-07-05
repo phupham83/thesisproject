@@ -27,7 +27,7 @@ const SignUp = () => {
                 <div>
                     Password<input type="password" name="Password" id ="password"/>
                 </div>
-                <button type="submit">Sign up</button>
+                <button id ="signup-button" type="submit">Sign up</button>
             </form>
         </div>
     )
