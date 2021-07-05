@@ -10,7 +10,6 @@ const Transaction = () => {
 
     return(
         <div>
-
             <h1>Transactions</h1>
             <ul>
                 {transactions.map(transaction =>

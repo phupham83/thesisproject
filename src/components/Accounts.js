@@ -19,11 +19,11 @@ const Accounts = () => {
         <div>
             <h1>Accounts</h1>
             {user.consent ?
-                <div>
+                <div className = "showAccount">
                     {user.accounts}
                 </div>
                 :
-                <div>
+                <div className ="addAccount">
                     <p>Please add an account to start</p>
                     <button onClick ={handleAccountAuth}>Add account</button>
                 </div>
