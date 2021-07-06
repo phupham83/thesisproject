@@ -9,6 +9,7 @@ import Consent from "./components/Consent"
 import Accounts from "./components/Accounts"
 import { localLogin  } from "./reducers/userReducer"
 
+
 import {
     BrowserRouter as Router,
     Switch, Route, Link
@@ -21,7 +22,6 @@ const App = () => {
     }, [dispatch])
 
     const user = useSelector(state => state.user)
-
     const padding = {
         padding: 5
     }

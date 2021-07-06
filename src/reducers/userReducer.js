@@ -4,9 +4,9 @@ const userReducer = (state = null, action) => {
     let newState
     switch (action.type) {
     case "LOGIN":
-        return action.data
+        return { ... action.data, accounts:[] }
     case "LOCAL_LOGIN":
-        return action.data
+        return { ... action.data, accounts:[] }
     case "LOGOUT":
         return null
     case "SIGN_UP":
@@ -16,7 +16,7 @@ const userReducer = (state = null, action) => {
         console.log(action.data)
         return state
     case "GET_ACCOUNTS":
-        newState = { ...state, accounts: action.data }
+        newState = { ...state, accounts: action.data.accounts }
         return newState
     default:
         console.log("")
@@ -98,10 +98,10 @@ export const getConsent = () => {
 }
 
 export const getAccounts = (user) => {
-    if(user.consent){
-        return async dispatch => {
+    return async dispatch => {
+        if (user.consent){
             try {
-                const response = await userService.getAccounts(user.id)
+                const response = await userService.getAccounts()
                 dispatch({
                     type: "GET_ACCOUNTS",
                     data: response
@@ -109,17 +109,12 @@ export const getAccounts = (user) => {
             } catch (e) {
                 console.log(e)
             }
-        }} else{
-        return async dispatch => {
-            try {
-                const response = null
-                dispatch({
-                    type: "GET_ACCOUNTS",
-                    data: response
-                })
-            } catch (e) {
-                console.log(e)
-            }}
+        }
+        else {
+            dispatch({
+                type: "NO_ACCOUNTS"
+            })
+        }
     }
 }
 

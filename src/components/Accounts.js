@@ -1,16 +1,16 @@
 import React, { useEffect } from "react"
-import { useSelector, useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import {  getAccounts } from "../reducers/userReducer"
 import { useHistory } from "react-router"
 
 const Accounts = () => {
     const dispatch = useDispatch()
-    const history = useHistory()
     const user = useSelector(state => state.user)
     useEffect(() => {
         dispatch(getAccounts(user))
-    }, [dispatch])
-
+    }, [])
+    const accounts = useSelector(state => state.user.accounts)
+    const history = useHistory()
     const handleAccountAuth = (event) => {
         event.preventDefault()
         history.push("/consent")
@@ -20,7 +20,12 @@ const Accounts = () => {
             <h1>Accounts</h1>
             {user.consent ?
                 <div className = "showAccount">
-                    {user.accounts}
+                    <ul>
+                        {accounts.map(account =>
+                            <li key = {account.id}>
+                                {account.bank_id}
+                            </li>)}
+                    </ul>
                 </div>
                 :
                 <div className ="addAccount">
