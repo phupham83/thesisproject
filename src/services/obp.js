@@ -11,4 +11,9 @@ const getAccounts = async () => {
     return response.data
 }
 
-export default { getConsent, getAccounts }
+const getTransactions = async () => {
+    const response = await axios.get(baseUrl + "/getTransactions")
+    return response.data
+}
+
+export default { getConsent, getAccounts, getTransactions }

@@ -3,31 +3,13 @@ import * as reactRedux from "react-redux"
 import "@testing-library/jest-dom/extend-expect"
 import { render } from "@testing-library/react"
 // import { MemoryRouter } from "react-router"
-import Transactions from "./Transaction"
 import Accounts from "./Accounts"
 
 const useSelectorMock = jest.spyOn(reactRedux, "useSelector")
 const useDispatchMock = jest.spyOn(reactRedux, "useDispatch")
 const dummyDispatch = jest.fn()
 
-describe("<Transaction />", () => {
-    beforeEach(() => {
-        useSelectorMock.mockClear()
-        useDispatchMock.mockClear()
-    })
-    test("render transaction and calls dispatch to initiate transactions", () => {
-        const dummyDispatch = jest.fn()
-        useDispatchMock.mockReturnValue(dummyDispatch)
-        useSelectorMock.mockReturnValue([{ counterparty:"Tesco", amount:"30", type:"out", id:"60fcde2" }])
-        const component = render(
-            <Transactions />
-        )
-        expect(component.container).toHaveTextContent(
-            "Tesco"
-        )
-        expect(dummyDispatch.mock.calls).toHaveLength(1)
-    })
-})
+
 
 describe("<Accounts />", () => {
     let component

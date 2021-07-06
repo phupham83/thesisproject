@@ -9,7 +9,6 @@ const Accounts = () => {
     useEffect(() => {
         dispatch(getAccounts(user))
     }, [])
-    const accounts = useSelector(state => state.user.accounts)
     const history = useHistory()
     const handleAccountAuth = (event) => {
         event.preventDefault()
@@ -21,7 +20,7 @@ const Accounts = () => {
             {user.consent ?
                 <div className = "showAccount">
                     <ul>
-                        {accounts.map(account =>
+                        {user.accounts.map(account =>
                             <li key = {account.id}>
                                 {account.bank_id}
                             </li>)}

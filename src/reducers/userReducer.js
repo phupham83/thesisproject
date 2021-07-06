@@ -5,10 +5,10 @@ const userReducer = (state = null, action) => {
     let newState
     switch (action.type) {
     case "LOGIN":
-        return { ... action.data, accounts:[] }
+        return { ... action.data, accounts:[], transactions:[] }
     case "LOCAL_LOGIN":
         if(action.data) {
-            return { ... action.data, accounts:[] }
+            return { ... action.data, accounts:[], transactions:[]  }
         }else {
             return action.data
         }
@@ -22,6 +22,11 @@ const userReducer = (state = null, action) => {
         return state
     case "GET_ACCOUNTS":
         newState = { ...state, accounts: action.data.accounts }
+        return newState
+    case "NO_ACCOUNTS":
+        return state
+    case "GET_TRANSACTIONS":
+        newState = { ...state, transactions: action.data.transactions }
         return newState
     default:
         console.log("")
@@ -117,6 +122,26 @@ export const getAccounts = (user) => {
             }
         }
         else {
+            dispatch({
+                type: "NO_ACCOUNTS"
+            })
+        }
+    }
+}
+
+export const getTransactions = (user) => {
+    return async dispatch => {
+        if(user.consent){
+            try {
+                const response = await obpService.getTransactions()
+                dispatch({
+                    type:"GET_TRANSACTIONS",
+                    data: response
+                })
+            } catch (e) {
+                console.log(e)
+            }
+        }else {
             dispatch({
                 type: "NO_ACCOUNTS"
             })

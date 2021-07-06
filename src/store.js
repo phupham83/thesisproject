@@ -1,14 +1,12 @@
 import { createStore, combineReducers, applyMiddleware } from "redux"
 import thunk from "redux-thunk"
 import { composeWithDevTools } from "redux-devtools-extension"
-import transactionReducer from "./reducers/transactionReducer"
 import userReducer from "./reducers/userReducer"
 import messageReducer from "./reducers/messageReducer"
 
 
 
 const combinedReducer = combineReducers({
-    transactions: transactionReducer,
     user: userReducer,
     message: messageReducer
 })

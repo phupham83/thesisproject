@@ -1,21 +1,20 @@
 import React, { useEffect } from "react"
 import { useDispatch,useSelector } from "react-redux"
-import { initializeTransactions } from "../reducers/transactionReducer"
+import { getTransactions } from "../reducers/userReducer"
 const Transaction = () => {
     const dispatch = useDispatch()
+    const user = useSelector(state => state.user)
     useEffect(() => {
-        dispatch(initializeTransactions())
+        dispatch(getTransactions(user))
     }, [dispatch])
-    const transactions = useSelector(state => state.transactions)
 
     return(
         <div>
             <h1>Transactions</h1>
             <ul>
-                {transactions.map(transaction =>
+                {user.transactions.map(transaction =>
                     <li key = {transaction.id}>
-                        {transaction.counterparty}
-                        {transaction.amount}
+                        Balance: {transaction.details.new_balance.amount} Transfer amount: {transaction.details.value.amount} Description: {transaction.details.description}
                     </li>)}
             </ul>
         </div>
