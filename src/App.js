@@ -7,6 +7,7 @@ import Logout from "./components/Logout"
 import SignUp from "./components/SignUp"
 import Consent from "./components/Consent"
 import Accounts from "./components/Accounts"
+import Message from "./components/Message"
 import { localLogin  } from "./reducers/userReducer"
 
 
@@ -44,6 +45,7 @@ const App = () => {
                                 <Link style={padding} to="/login">Login</Link>
                                 <Link style={padding} to="/signup">Sign Up</Link>
                             </div>
+                            <Message />
                         </Route>
                         <Route path = "*">
                             <Link style={padding} to="/">Home</Link>

@@ -1,4 +1,5 @@
 import userService from "../services/users"
+import obpService from "../services/obp"
 
 const userReducer = (state = null, action) => {
     let newState
@@ -6,7 +7,11 @@ const userReducer = (state = null, action) => {
     case "LOGIN":
         return { ... action.data, accounts:[] }
     case "LOCAL_LOGIN":
-        return { ... action.data, accounts:[] }
+        if(action.data) {
+            return { ... action.data, accounts:[] }
+        }else {
+            return action.data
+        }
     case "LOGOUT":
         return null
     case "SIGN_UP":
@@ -75,6 +80,7 @@ export const signup = (username, name, password,cb, messageCb) => {
                 type: "SIGN_UP",
                 data: response
             })
+            messageCb("Sign up successful")
             cb()
         } catch (e) {
             console.log(e)
@@ -86,7 +92,7 @@ export const signup = (username, name, password,cb, messageCb) => {
 export const getConsent = () => {
     return async dispatch => {
         try {
-            const response = await userService.getConsent()
+            const response = await obpService.getConsent()
             dispatch({
                 type: "GET_CONSENT",
                 data: response
@@ -101,7 +107,7 @@ export const getAccounts = (user) => {
     return async dispatch => {
         if (user.consent){
             try {
-                const response = await userService.getAccounts()
+                const response = await obpService.getAccounts()
                 dispatch({
                     type: "GET_ACCOUNTS",
                     data: response

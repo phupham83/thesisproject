@@ -21,14 +21,5 @@ const signup = async credentials => {
     return respone.data
 }
 
-const getConsent = () => {
-    // await axios.get("/api/obpApi/connect")
-    window.location.href = "/api/obpApi/connect"
-}
 
-const getAccounts = async () => {
-    const response = await axios.get("/api/obpApi/getMyAccounts/")
-    return response.data
-}
-
-export default { login, signup, getConsent, getAccounts, localLogin, logOut }
+export default { login, signup, localLogin, logOut }
