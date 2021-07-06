@@ -129,11 +129,11 @@ export const getAccounts = (user) => {
     }
 }
 
-export const getTransactions = (user) => {
+export const getTransactions = (user, bankid, id) => {
     return async dispatch => {
         if(user.consent){
             try {
-                const response = await obpService.getTransactions()
+                const response = await obpService.getTransactions(bankid, id)
                 dispatch({
                     type:"GET_TRANSACTIONS",
                     data: response

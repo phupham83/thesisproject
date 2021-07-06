@@ -11,8 +11,8 @@ const getAccounts = async () => {
     return response.data
 }
 
-const getTransactions = async () => {
-    const response = await axios.get(baseUrl + "/getTransactions")
+const getTransactions = async (bankid, id) => {
+    const response = await axios.get(baseUrl + "/getTransactions/" + bankid + "/" + id)
     return response.data
 }
 
