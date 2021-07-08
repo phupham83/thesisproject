@@ -21,5 +21,10 @@ const signup = async credentials => {
     return respone.data
 }
 
+const revoke = async () => {
+    const response = await axios.put("/api/users/revoke")
+    return response.data
+}
 
-export default { login, signup, localLogin, logOut }
+
+export default { login, signup, localLogin, logOut, revoke }

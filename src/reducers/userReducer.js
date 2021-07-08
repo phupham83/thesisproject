@@ -5,10 +5,10 @@ const userReducer = (state = null, action) => {
     let newState
     switch (action.type) {
     case "LOGIN":
-        return { ... action.data }
+        return action.data
     case "LOCAL_LOGIN":
         if(action.data) {
-            return { ... action.data }
+            return action.data
         }else {
             return action.data
         }
@@ -20,6 +20,8 @@ const userReducer = (state = null, action) => {
     case "GET_CONSENT":
         console.log(action.data)
         return state
+    case "REVOKE_CONSENT":
+        return action.data
     case "GET_ACCOUNTS":
         newState = { ...state, accounts: action.data }
         return newState
@@ -202,5 +204,18 @@ export const getTransactions = (user) => {
 //     }
 // }
 
+export const revokeConsent = () => {
+    return async dispatch => {
+        try {
+            const response = await userService.revoke()
+            dispatch({
+                type: "REVOKE_CONSENT",
+                data: response
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
 
 export default userReducer

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import {  getAccounts } from "../reducers/userReducer"
+import {  getAccounts, revokeConsent } from "../reducers/userReducer"
 import { useHistory } from "react-router"
 
 const Accounts = () => {
@@ -13,6 +13,10 @@ const Accounts = () => {
     const handleAccountAuth = (event) => {
         event.preventDefault()
         history.push("/consent")
+    }
+    const handleRevoke = (event) => {
+        event.preventDefault()
+        dispatch(revokeConsent())
     }
     return(
         <div>
@@ -28,6 +32,10 @@ const Accounts = () => {
                             :
                             <li>Loading</li>
                         }
+                        {user.accounts ?
+                            <button onClick ={handleRevoke} >Revoke Consent</button>
+                            :
+                            <li></li>}
                     </ul>
                 </div>
                 :
