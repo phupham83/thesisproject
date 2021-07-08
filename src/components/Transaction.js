@@ -21,14 +21,20 @@ const Transaction = () => {
         event.preventDefault()
         history.push("/consent")
     }
-    const allTransactionsArrays = user.accounts.map(account => account.transactions)
     const reducer = (a,b) => {
         if(a){
             return [...b, ...a]
         }
         return b
     }
-    const allTransactions = allTransactionsArrays.reduce(reducer, [])
+    const accounts = user.accounts ? user.accounts : []
+    const allTransactionsArrays = user.accounts ?
+        user.accounts[0].transactions ?
+            user.accounts.map(account => account.transactions)
+            : null
+        : null
+    const allTransactions =  allTransactionsArrays ? allTransactionsArrays.reduce(reducer, []) : []
+
     return(
         <div>
             <h1>Transactions</h1>
@@ -39,13 +45,13 @@ const Transaction = () => {
                             <Link to = {"/transactions/All_accounts"}>
                                 <button>All accounts</button>
                             </Link>
-                            {user.accounts.map(account =>
+                            {accounts.map(account =>
                                 <Link to = {"/transactions/" + account.bank_id + "/" + account.id} key ={account.id}>
                                     <button>{account.bank_id}</button>
                                 </Link>)}
                         </div>
                         <Switch>
-                            {user.accounts.map(account =>
+                            {accounts.map(account =>
                                 <Route path = {"/transactions/" + account.bank_id + "/" + account.id} key = {account.id}>
                                     <SingleAccounts transactions = {account.transactions}/>
                                 </Route>)}

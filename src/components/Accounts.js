@@ -20,10 +20,14 @@ const Accounts = () => {
             {user.consent ?
                 <div className = "showAccount">
                     <ul>
-                        {user.accounts.map(account =>
-                            <li key = {account.id}>
-                                {account.bank_id}
-                            </li>)}
+                        {user.accounts ?
+                            user.accounts.map(account =>
+                                <li key = {account.id}>
+                                    {account.bank_id}
+                                </li>)
+                            :
+                            <li>Loading</li>
+                        }
                     </ul>
                 </div>
                 :

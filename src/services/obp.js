@@ -16,4 +16,9 @@ const getTransactions = async (bankid, id) => {
     return response.data
 }
 
-export default { getConsent, getAccounts, getTransactions }
+const getBalance = async (bankid) => {
+    const response = await axios.get(baseUrl + "/getBalance/" + bankid)
+    return response.data
+}
+
+export default { getConsent, getAccounts, getTransactions, getBalance }

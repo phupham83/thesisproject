@@ -5,10 +5,10 @@ const userReducer = (state = null, action) => {
     let newState
     switch (action.type) {
     case "LOGIN":
-        return { ... action.data, accounts:[ { transactions:[] }] }
+        return { ... action.data }
     case "LOCAL_LOGIN":
         if(action.data) {
-            return { ... action.data, accounts:[ { transactions:[] }]  }
+            return { ... action.data }
         }else {
             return action.data
         }
@@ -112,14 +112,9 @@ export const getAccounts = (user) => {
         if (user.consent){
             try {
                 const response = await obpService.getAccounts()
-                const accounts = response.accounts
-                const newAccounts = accounts.map(account => {
-                    const newaccount = { ...account, transactions:[] }
-                    return (newaccount)
-                })
                 dispatch({
                     type: "GET_ACCOUNTS",
-                    data: newAccounts
+                    data: response.accounts
                 })
             } catch (e) {
                 console.log(e)
@@ -160,6 +155,10 @@ export const getTransactions = (user) => {
         }
     }
 }
+
+// export const getBalance = (user) =>{
+
+// }
 
 
 export default userReducer
