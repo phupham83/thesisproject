@@ -2,12 +2,17 @@ import React, { useEffect } from "react"
 import { useDispatch,useSelector } from "react-redux"
 import { getTransactions } from "../reducers/userReducer"
 import { useHistory } from "react-router"
+import AllAccounts from "./transactions/AllAccounts"
+import SingleAccounts from "./transactions/SingleAccount"
+import {
+    BrowserRouter as Router,
+    Switch, Route, Link
+} from "react-router-dom"
+
 
 const Transaction = () => {
     const dispatch = useDispatch()
     const user = useSelector(state => state.user)
-    // const bankid = "gh.29.fi"
-    // const id = "9c0502d7-c076-424d-a2bc-cb689edb4734"
     useEffect(() => {
         dispatch(getTransactions(user))
     }, [dispatch])
@@ -17,7 +22,6 @@ const Transaction = () => {
         history.push("/consent")
     }
     const allTransactionsArrays = user.accounts.map(account => account.transactions)
-    console.log(allTransactionsArrays)
     const reducer = (a,b) => {
         if(a){
             return [...b, ...a]
@@ -25,22 +29,34 @@ const Transaction = () => {
         return b
     }
     const allTransactions = allTransactionsArrays.reduce(reducer, [])
-    console.log(allTransactions)
-    const list = ["All accounts", "a", "b", "c"]
     return(
         <div>
             <h1>Transactions</h1>
             {user.consent ?
                 <div>
-                    <p>{list.map(item =>
-                        <button key ={item}>{item}</button>
-                    )}</p>
-                    <ul>
-                        {allTransactions.map(transaction =>
-                            <li key = {transaction.id}>
-                        Balance: {transaction.details.new_balance.amount} Transfer amount: {transaction.details.value.amount} Description: {transaction.details.description}
-                            </li>)}
-                    </ul>
+                    <Router>
+                        <div>
+                            <Link to = {"/transactions/All_accounts"}>
+                                <button>All accounts</button>
+                            </Link>
+                            {user.accounts.map(account =>
+                                <Link to = {"/transactions/" + account.bank_id + "/" + account.id} key ={account.id}>
+                                    <button>{account.bank_id}</button>
+                                </Link>)}
+                        </div>
+                        <Switch>
+                            {user.accounts.map(account =>
+                                <Route path = {"/transactions/" + account.bank_id + "/" + account.id} key = {account.id}>
+                                    <SingleAccounts transactions = {account.transactions}/>
+                                </Route>)}
+                            <Route path ="/transactions/All_accounts">
+                                <AllAccounts transactions = {allTransactions}/>
+                            </Route>
+                            <Route exact path ="/transactions">
+                                <AllAccounts transactions = {allTransactions}/>
+                            </Route>
+                        </Switch>
+                    </Router>
                 </div>
                 :
                 <div className ="addAccount">

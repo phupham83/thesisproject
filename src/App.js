@@ -2,15 +2,13 @@ import React, { useEffect } from "react"
 import {  useDispatch, useSelector } from "react-redux"
 import NoMatch from "./components/NoMatch"
 import Transaction from "./components/Transaction"
-import Login from "./components/Login"
-import Logout from "./components/Logout"
-import SignUp from "./components/SignUp"
+import Login from "./components/users/Login"
+import Logout from "./components/users/Logout"
+import SignUp from "./components/users/SignUp"
 import Consent from "./components/Consent"
 import Accounts from "./components/Accounts"
 import Message from "./components/Message"
 import { localLogin  } from "./reducers/userReducer"
-
-
 import {
     BrowserRouter as Router,
     Switch, Route, Link

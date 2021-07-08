@@ -1,9 +1,9 @@
 import React from "react"
 import { useDispatch } from "react-redux"
 import { useHistory } from "react-router"
-import { signup } from "../reducers/userReducer"
-import { setMessage } from "../reducers/messageReducer"
-import Message from "./Message"
+import { signup } from "../../reducers/userReducer"
+import { setMessage } from "../../reducers/messageReducer"
+import Message from "../Message"
 
 const SignUp = () => {
     const dispatch = useDispatch()
