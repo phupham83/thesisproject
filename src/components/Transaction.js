@@ -27,13 +27,28 @@ const Transaction = () => {
         }
         return b
     }
+    const sumReducer = (initial,nextValue) => {
+        const reducer = (a,b) => {
+            return a + Number(b.amount)
+        }
+        const sum = nextValue.reduce(reducer,0)
+        return initial + sum
+    }
     const accounts = user.accounts ? user.accounts : []
     const allTransactionsArrays = user.accounts ?
         user.accounts[0].transactions ?
             user.accounts.map(account => account.transactions)
             : null
         : null
+
+    const allBalancesArrays = user.accounts ?
+        user.accounts[0].balances ?
+            user.accounts.map(account => account.balances)
+            : null
+        : null
+
     const allTransactions =  allTransactionsArrays ? allTransactionsArrays.reduce(reducer, []) : []
+    const totalBalance = allBalancesArrays ? allBalancesArrays.reduce(sumReducer,0) : 0
 
     return(
         <div>
@@ -53,13 +68,13 @@ const Transaction = () => {
                         <Switch>
                             {accounts.map(account =>
                                 <Route path = {"/transactions/" + account.bank_id + "/" + account.id} key = {account.id}>
-                                    <SingleAccounts transactions = {account.transactions}/>
+                                    <SingleAccounts transactions = {account.transactions} balances = {account.balances}/>
                                 </Route>)}
                             <Route path ="/transactions/All_accounts">
-                                <AllAccounts transactions = {allTransactions}/>
+                                <AllAccounts transactions = {allTransactions} totalBalance = {totalBalance}/>
                             </Route>
                             <Route exact path ="/transactions">
-                                <AllAccounts transactions = {allTransactions}/>
+                                <AllAccounts transactions = {allTransactions} totalBalance = {totalBalance}/>
                             </Route>
                         </Switch>
                     </Router>
