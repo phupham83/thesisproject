@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { useDispatch,useSelector } from "react-redux"
-import { getTransactions } from "../reducers/userReducer"
+import { getTransactions, localLogin } from "../reducers/userReducer"
 import { useHistory } from "react-router"
 import AllAccounts from "./transactions/AllAccounts"
 import SingleAccounts from "./transactions/SingleAccount"
@@ -15,11 +15,16 @@ const Transaction = () => {
     const user = useSelector(state => state.user)
     useEffect(() => {
         dispatch(getTransactions(user))
-    }, [dispatch])
+    }, [])
     const history = useHistory()
     const handleAccountAuth = (event) => {
         event.preventDefault()
         history.push("/consent")
+    }
+    const handleRefresh = (event) => {
+        event.preventDefault()
+        dispatch(localLogin())
+        dispatch(getTransactions(user))
     }
     const reducer = (a,b) => {
         if(a){
@@ -49,21 +54,23 @@ const Transaction = () => {
 
     const allTransactions =  allTransactionsArrays ? allTransactionsArrays.reduce(reducer, []) : []
     const totalBalance = allBalancesArrays ? allBalancesArrays.reduce(sumReducer,0) : 0
+    const btnStyle ="px-4 py-3 bg-gray-200 text-gray-500 text-xs font-semibold rounded hover:bg-gray-600 hover:text-white"
 
     return(
         <div>
-            <h1>Transactions</h1>
+            <h1 className="text-3xl font-semibold text-gray-800 md:text-4xl">Transactions</h1>
             {user.consent ?
                 <div>
                     <Router>
-                        <div>
+                        <div className = "space-x-4" >
                             <Link to = {"/transactions/All_accounts"}>
-                                <button>All accounts</button>
+                                <button className = {btnStyle}>All accounts</button>
                             </Link>
                             {accounts.map(account =>
                                 <Link to = {"/transactions/" + account.bank_id + "/" + account.id} key ={account.id}>
-                                    <button>{account.bank_id}</button>
+                                    <button className = {btnStyle}>{account.bank_id}</button>
                                 </Link>)}
+                            <button onClick = { handleRefresh } className = {btnStyle}>Refresh</button>
                         </div>
                         <Switch>
                             {accounts.map(account =>

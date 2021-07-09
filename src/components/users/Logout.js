@@ -12,7 +12,7 @@ const Logout = () => {
         dispatch(logout(cb))
     }
     return(
-        <button onClick ={handleLogout}>Log out</button>
+        <button onClick ={handleLogout}> Log out</button>
     )
 }
 

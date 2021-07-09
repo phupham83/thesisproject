@@ -2,7 +2,6 @@ import userService from "../services/users"
 import obpService from "../services/obp"
 
 const userReducer = (state = null, action) => {
-    let newState
     switch (action.type) {
     case "LOGIN":
         return action.data
@@ -23,8 +22,7 @@ const userReducer = (state = null, action) => {
     case "REVOKE_CONSENT":
         return action.data
     case "GET_ACCOUNTS":
-        newState = { ...state, accounts: action.data }
-        return newState
+        return action.data
     case "NO_ACCOUNTS":
         return state
     case "GET_TRANSACTIONS":
@@ -114,17 +112,26 @@ export const getConsent = () => {
 export const getAccounts = (user) => {
     return async dispatch => {
         if (user.consent){
-            try {
-                const response = await obpService.getAccounts()
-                dispatch({
-                    type: "GET_ACCOUNTS",
-                    data: response.accounts
-                })
-            } catch (e) {
-                console.log(e)
-            }
-        }
-        else {
+            if(user.accounts){
+                try {
+                    dispatch({
+                        type: "GET_ACCOUNTS",
+                        data: { ...user }
+                    })
+                } catch (e) {
+                    console.log(e)
+                }
+            }else{
+                try {
+                    const response = await obpService.getAccounts()
+                    dispatch({
+                        type: "GET_ACCOUNTS",
+                        data: { ...user, accounts: response.accounts }
+                    })
+                } catch (e) {
+                    console.log(e)
+                }
+            }}else {
             dispatch({
                 type: "NO_ACCOUNTS"
             })
@@ -132,40 +139,47 @@ export const getAccounts = (user) => {
     }
 }
 
+
 export const getTransactions = (user) => {
     return async dispatch => {
-        if(user.consent){
-            try {
-                const data = await obpService.getAccounts()
-                const reducer = (a,b) => {
-                    if(a && b){
-                        return [...b, ...a]
-                    }
-                    return b
-                }
-                const transactionsPromises = data.accounts.map(async (account) => {
-                    const response = await obpService.getBalance(account.bank_id)
-                    const transactions = await obpService.getTransactions(account.bank_id, account.id)
-                    const balances = response.accounts.reduce((initial, item) => {
-                        if(item.account_id === account.id){
-                            initial.push(item.balances.reduce(reducer))
-                            return initial
-                        }else{
-                            return initial
+        if(user){
+            if(user.consent){
+                try {
+                    const data = await obpService.getAccounts()
+                    const reducer = (a,b) => {
+                        if(a && b){
+                            return [...b, ...a]
                         }
-                    },[])
-                    return(
-                        { ...account, transactions: transactions.transactions, balances: balances }
-                    )
-                })
-                const results = await Promise.all(transactionsPromises)
-                const newUser = { ...user, accounts: results }
+                        return b
+                    }
+                    const transactionsPromises = data.accounts.map(async (account) => {
+                        const response = await obpService.getBalance(account.bank_id)
+                        const transactions = await obpService.getTransactions(account.bank_id, account.id)
+                        const balances = response.accounts.reduce((initial, item) => {
+                            if(item.account_id === account.id){
+                                initial.push(item.balances.reduce(reducer))
+                                return initial
+                            }else{
+                                return initial
+                            }
+                        },[])
+                        return(
+                            { ...account, transactions: transactions.transactions, balances: balances }
+                        )
+                    })
+                    const results = await Promise.all(transactionsPromises)
+                    const newUser = { ...user, accounts: results }
+                    dispatch({
+                        type:"GET_TRANSACTIONS",
+                        data: newUser
+                    })
+                } catch (e) {
+                    console.log(e)
+                }
+            }else {
                 dispatch({
-                    type:"GET_TRANSACTIONS",
-                    data: newUser
+                    type: "NO_ACCOUNTS"
                 })
-            } catch (e) {
-                console.log(e)
             }
         }else {
             dispatch({

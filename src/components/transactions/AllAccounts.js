@@ -43,32 +43,46 @@ const AllAccounts = ({ transactions , totalBalance }) => {
                 } },
         }
         return(
-            <div>
+            <div >
                 <div style ={{ height: "500px", width: "1000px" }} >
                     <Line data={data} options={options} />
                 </div>
-                <ul>
-                    {transactions.map((transaction) => {
-                        if(transaction.details.completed !== startingDate){
-                            startingDate = transaction.details.completed
-                        }else{
-                            transaction.details.completed = null
-                        }
-                        return(
-                            <div key = {transaction.id}>
-                                {transaction.details.completed ? <h2>{transaction.details.completed}</h2> : console.log()}
-                                <li >
+                <div className = "bg-white shadow-xl rounded-lg w-1/2">
+                    <ul className="divide-y divide-gray-300">
+                        {transactions.map((transaction) => {
+                            if(transaction.details.completed !== startingDate){
+                                startingDate = transaction.details.completed
+                            }else{
+                                transaction.details.completed = null
+                            }
+                            return(
+                                <div key = {transaction.id}>
+                                    {transaction.details.completed ? <h2 className="text-3xl font-semibold text-gray-800 md:text-2xl">{transaction.details.completed}</h2> : console.log()}
+                                    <li className="p-4 hover:bg-gray-50 cursor-pointer">
                             Balance: {transaction.details.new_balance.amount.toFixed(2)} Transfer amount: {transaction.details.value.amount} Description: {transaction.details.description}
-                                </li>
-                            </div>
-                        )})}
-                </ul>
+                                    </li>
+                                </div>
+                            )})}
+                    </ul>
+                </div>
             </div>
 
         )
     }
     return(
-        <h1>Loading ...</h1>
+        <div className="flex items-center justify-center w-full h-full">
+            <div className="flex justify-center items-center space-x-1 text-sm text-gray-700 ">
+
+                <svg fill='none' className="w-12 h-12 animate-spin" viewBox="0 0 32 32" xmlns='http://www.w3.org/2000/svg'>
+                    <path clipRule='evenodd'
+                        d='M15.165 8.53a.5.5 0 01-.404.58A7 7 0 1023 16a.5.5 0 011 0 8 8 0 11-9.416-7.874.5.5 0 01.58.404z'
+                        fill='currentColor' fillRule='evenodd' />
+                </svg>
+
+
+                <div className ="text-3xl">Loading ...</div>
+            </div>
+        </div>
     )
 }
 

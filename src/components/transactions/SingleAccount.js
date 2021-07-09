@@ -41,37 +41,37 @@ const SingleAccounts = ({ transactions, balances }) => {
                 <div style ={{ height: "500px", width: "1000px" }} >
                     <Line data={data} options={options} />
                 </div>
-                <ul>
-                    {transactions.map((transaction) => {
-                        if(transaction.details.completed !== startingDate){
-                            startingDate = transaction.details.completed
-                        }else{
-                            transaction.details.completed = null
-                        }
-                        return(
-                            <div key = {transaction.id}>
-                                {transaction.details.completed ? <h2>{transaction.details.completed}</h2> : console.log()}
-                                <li >
+                <div className = "bg-white shadow-xl rounded-lg w-1/2">
+                    <ul className="divide-y divide-gray-300">
+                        {transactions.map((transaction) => {
+                            if(transaction.details.completed !== startingDate){
+                                startingDate = transaction.details.completed
+                            }else{
+                                transaction.details.completed = null
+                            }
+                            return(
+                                <div key = {transaction.id}>
+                                    {transaction.details.completed ? <h2 className="text-3xl font-semibold text-gray-800 md:text-2xl">{transaction.details.completed}</h2> : console.log()}
+                                    <li className="p-4 hover:bg-gray-50 cursor-pointer" >
                             Balance: {transaction.details.new_balance.amount} Transfer amount: {transaction.details.value.amount} Description: {transaction.details.description}
-                                </li>
-                            </div>
-                        )})}
-                </ul>
+                                    </li>
+                                </div>
+                            )})}
+                    </ul>
+                </div>
             </div>
         )
     }else if(balances[0]){
         return (
             <div>
                 {balances.map(balance =>
-                    <h3 key = {balance.amount}>
+                    <h3 key = {balance.amount} className="text-3xl font-semibold text-gray-800 md:text-2xl">
                             Balance: {balance.amount}
                     </h3>)}
+                No recent transactions
             </div>
         )
     }
-    return(
-        <h1>Loading ...</h1>
-    )
 }
 
 export default SingleAccounts
