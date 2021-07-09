@@ -30,12 +30,12 @@ const Accounts = () => {
                                     {account.bank_id}
                                 </li>)
                             :
-                            <li>Loading</li>
+                            <h1>Loading ...</h1>
                         }
                         {user.accounts ?
                             <button onClick ={handleRevoke} >Revoke Consent</button>
                             :
-                            <li></li>}
+                            console.log()}
                     </ul>
                 </div>
                 :
