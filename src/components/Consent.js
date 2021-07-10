@@ -2,6 +2,7 @@ import React from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { getConsent } from "../reducers/userReducer"
 import { Redirect } from "react-router"
+import Button from "./utils/Button"
 
 const Consent = () => {
     const dispatch = useDispatch()
@@ -14,9 +15,9 @@ const Consent = () => {
     return(
         <div>
             {user ? <div>
-                <h1>Consent confirmation</h1>
+                <h1 className="text-3xl font-semibold text-gray-800 md:text-4xl">Consent confirmation</h1>
                 <p>By accepting you are allowing your data to be accessed</p>
-                <button onClick ={handleConfirm}>Confirm</button>
+                <Button cb = {handleConfirm} text ="Confirm" />
             </div> :
                 <Redirect to ="/"/>
             }

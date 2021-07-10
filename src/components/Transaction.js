@@ -4,6 +4,7 @@ import { getTransactions, localLogin } from "../reducers/userReducer"
 import { useHistory } from "react-router"
 import AllAccounts from "./transactions/AllAccounts"
 import SingleAccounts from "./transactions/SingleAccount"
+import Button from "./utils/Button"
 import {
     BrowserRouter as Router,
     Switch, Route, Link
@@ -54,7 +55,6 @@ const Transaction = () => {
 
     const allTransactions =  allTransactionsArrays ? allTransactionsArrays.reduce(reducer, []) : []
     const totalBalance = allBalancesArrays ? allBalancesArrays.reduce(sumReducer,0) : 0
-    const btnStyle ="px-4 py-3 bg-gray-200 text-gray-500 text-xs font-semibold rounded hover:bg-gray-600 hover:text-white"
 
     return(
         <div>
@@ -64,13 +64,13 @@ const Transaction = () => {
                     <Router>
                         <div className = "space-x-4" >
                             <Link to = {"/transactions/All_accounts"}>
-                                <button className = {btnStyle}>All accounts</button>
+                                <Button text ="All Accounts" />
                             </Link>
                             {accounts.map(account =>
                                 <Link to = {"/transactions/" + account.bank_id + "/" + account.id} key ={account.id}>
-                                    <button className = {btnStyle}>{account.bank_id}</button>
+                                    <Button text ={account.bank_id} />
                                 </Link>)}
-                            <button onClick = { handleRefresh } className = {btnStyle}>Refresh</button>
+                            <Button cb = { handleRefresh } text ="Refresh" />
                         </div>
                         <Switch>
                             {accounts.map(account =>
@@ -89,7 +89,7 @@ const Transaction = () => {
                 :
                 <div className ="addAccount">
                     <p>Please add an account to start</p>
-                    <button onClick ={handleAccountAuth}>Add account</button>
+                    <Button cb ={handleAccountAuth} text ="Add Account"/>
                 </div>
             }
         </div>

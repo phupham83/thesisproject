@@ -26,9 +26,6 @@ const Message = () => {
                 </div>
             </div>
         </div>
-        // <div style={style}>
-        //     {message}
-        // </div>
     )
 }
 

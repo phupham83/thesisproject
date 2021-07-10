@@ -1,4 +1,5 @@
 import React from "react"
+import TransactionList from "./TransactionList"
 import { Line } from "react-chartjs-2"
 
 const SingleAccounts = ({ transactions, balances }) => {
@@ -9,7 +10,6 @@ const SingleAccounts = ({ transactions, balances }) => {
             return { ...transaction, details: { ...transaction.details, completed: newDate } }
         })
         const dates = transactions.map(transaction => transaction.details.completed)
-        let startingDate = null
         const balanceList = transactions.map(transaction => transaction.details.new_balance.amount)
         const data ={
             labels : dates,
@@ -41,24 +41,7 @@ const SingleAccounts = ({ transactions, balances }) => {
                 <div style ={{ height: "500px", width: "1000px" }} >
                     <Line data={data} options={options} />
                 </div>
-                <div className = "bg-white shadow-xl rounded-lg w-1/2">
-                    <ul className="divide-y divide-gray-300">
-                        {transactions.map((transaction) => {
-                            if(transaction.details.completed !== startingDate){
-                                startingDate = transaction.details.completed
-                            }else{
-                                transaction.details.completed = null
-                            }
-                            return(
-                                <div key = {transaction.id}>
-                                    {transaction.details.completed ? <h2 className="text-3xl font-semibold text-gray-800 md:text-2xl">{transaction.details.completed}</h2> : console.log()}
-                                    <li className="p-4 hover:bg-gray-50 cursor-pointer" >
-                            Balance: {transaction.details.new_balance.amount} Transfer amount: {transaction.details.value.amount} Description: {transaction.details.description}
-                                    </li>
-                                </div>
-                            )})}
-                    </ul>
-                </div>
+                <TransactionList transactions = {transactions}/>
             </div>
         )
     }else if(balances[0]){
