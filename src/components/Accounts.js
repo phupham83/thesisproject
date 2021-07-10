@@ -22,7 +22,7 @@ const Accounts = () => {
     }
     return(
         <div>
-            <h1 className="text-3xl font-semibold text-gray-800 md:text-4xl">Accounts</h1>
+            <h1>Accounts</h1>
             {user.consent ?
                 <div>
                     <div className = "bg-white shadow-xl rounded-lg w-1/2">

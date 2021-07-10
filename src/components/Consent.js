@@ -15,7 +15,7 @@ const Consent = () => {
     return(
         <div>
             {user ? <div>
-                <h1 className="text-3xl font-semibold text-gray-800 md:text-4xl">Consent confirmation</h1>
+                <h1>Consent confirmation</h1>
                 <p>By accepting you are allowing your data to be accessed</p>
                 <Button cb = {handleConfirm} text ="Confirm" />
             </div> :

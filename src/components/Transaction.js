@@ -58,7 +58,7 @@ const Transaction = () => {
 
     return(
         <div>
-            <h1 className="text-3xl font-semibold text-gray-800 md:text-4xl">Transactions</h1>
+            <h1>Transactions</h1>
             {user.consent ?
                 <div>
                     <Router>

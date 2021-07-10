@@ -101,7 +101,7 @@ const App = () => {
                             <Consent/>
                         </Route>
                         <Route exact path ="/">
-                            <h1 className="text-3xl font-semibold text-gray-800 md:text-4xl">Welcome to your budget planner</h1>
+                            <h1 >Welcome to your budget planner</h1>
                         </Route>
                         <Route path ="*">
                             <Link to="/">Home</Link>

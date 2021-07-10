@@ -13,7 +13,7 @@ const TransactionList = ({ transactions }) => {
                     }
                     return(
                         <div key = {transaction.id}>
-                            {transaction.details.completed ? <h2 className="text-3xl font-semibold text-gray-800 md:text-2xl">{transaction.details.completed}</h2> : console.log()}
+                            {transaction.details.completed ? <h2>{transaction.details.completed}</h2> : console.log()}
                             <li className="p-4 hover:bg-gray-50 cursor-pointer">
                             Balance: {transaction.details.new_balance.amount} Transfer amount: {transaction.details.value.amount} Description: {transaction.details.description}
                             </li>

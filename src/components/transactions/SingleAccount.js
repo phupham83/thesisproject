@@ -48,7 +48,7 @@ const SingleAccounts = ({ transactions, balances }) => {
         return (
             <div>
                 {balances.map(balance =>
-                    <h3 key = {balance.amount} className="text-3xl font-semibold text-gray-800 md:text-2xl">
+                    <h3 key = {balance.amount}>
                             Balance: {balance.amount}
                     </h3>)}
                 No recent transactions
