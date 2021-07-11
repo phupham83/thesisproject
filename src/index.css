@@ -10,6 +10,9 @@
       @apply text-3xl font-semibold text-gray-800 md:text-3xl;
     }
     h3 {
-        @apply text-3xl font-semibold text-gray-800 md:text-2xl;
+      @apply text-3xl font-semibold text-gray-800 md:text-2xl;
+    }
+    p {
+      @apply mt-2 text-sm text-gray-500 md:text-base
     }
   }

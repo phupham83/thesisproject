@@ -104,7 +104,6 @@ const App = () => {
                             <h1 >Welcome to your budget planner</h1>
                         </Route>
                         <Route path ="*">
-                            <Link to="/">Home</Link>
                             <NoMatch />
                         </Route>
                     </Switch>
