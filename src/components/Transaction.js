@@ -1,10 +1,10 @@
 import React, { useEffect } from "react"
 import { useDispatch,useSelector } from "react-redux"
 import { getTransactions, localLogin } from "../reducers/userReducer"
-import { useHistory } from "react-router"
 import AllAccounts from "./transactions/AllAccounts"
 import SingleAccounts from "./transactions/SingleAccount"
 import Button from "./utils/Button"
+import NoAccounts from "./transactions/NoAccounts"
 import {
     BrowserRouter as Router,
     Switch, Route, Link
@@ -17,11 +17,6 @@ const Transaction = () => {
     useEffect(() => {
         dispatch(getTransactions(user))
     }, [])
-    const history = useHistory()
-    const handleAccountAuth = (event) => {
-        event.preventDefault()
-        history.push("/consent")
-    }
     const handleRefresh = (event) => {
         event.preventDefault()
         dispatch(localLogin())
@@ -87,10 +82,7 @@ const Transaction = () => {
                     </Router>
                 </div>
                 :
-                <div className ="addAccount">
-                    <p>Please add an account to start</p>
-                    <Button cb ={handleAccountAuth} text ="Add Account"/>
-                </div>
+                <NoAccounts />
             }
         </div>
 

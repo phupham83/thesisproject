@@ -8,6 +8,7 @@ import SignUp from "./components/users/SignUp"
 import Consent from "./components/Consent"
 import Accounts from "./components/Accounts"
 import Message from "./components/Message"
+import Home from "./components/Home"
 import { localLogin  } from "./reducers/userReducer"
 
 import {
@@ -101,7 +102,7 @@ const App = () => {
                             <Consent/>
                         </Route>
                         <Route exact path ="/">
-                            <h1 >Welcome to your budget planner</h1>
+                            <Home />
                         </Route>
                         <Route path ="*">
                             <NoMatch />

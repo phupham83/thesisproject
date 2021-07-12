@@ -52,6 +52,13 @@ const AllAccounts = ({ transactions , totalBalance }) => {
             </div>
 
         )
+    }else if(totalBalance){
+        return (
+            <div>
+                <h3>Balance: {totalBalance}</h3>
+                No recent transactions
+            </div>
+        )
     }
     return(
         <Loading />
