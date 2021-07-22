@@ -19,6 +19,9 @@ const userReducer = (state = null, action) => {
     case "GET_CONSENT":
         console.log(action.data)
         return state
+    case "GRANT_VIEW":
+        console.log(action.data)
+        return state
     case "REVOKE_CONSENT":
         return action.data
     case "GET_ACCOUNTS":
@@ -30,9 +33,8 @@ const userReducer = (state = null, action) => {
     case "GET_BALANCE":
         return action.data
     default:
-        console.log("")
+        return state
     }
-    return state
 }
 
 export const login = (username, password, cb, messageCb) => {
@@ -189,34 +191,19 @@ export const getTransactions = (user) => {
     }
 }
 
-// export const getBalance = (user) => {
-//     return async dispatch => {
-//         if(user.consent){
-//             try {
-//                 const data = await obpService.getAccounts()
-//                 const balancePromises = data.accounts.map(async (account) => {
-//                     const response = await obpService.getBalance(account.bank_id)
-//                     const balances = response.accounts.map(account => account.balances)
-//                     return(
-//                         { ...account, balance: balances }
-//                     )
-//                 })
-//                 const results = await Promise.all(balancePromises)
-//                 const newUser = { ...user, accounts: results }
-//                 dispatch({
-//                     type:"GET_BALANCE",
-//                     data: newUser
-//                 })
-//             } catch (e) {
-//                 console.log(e)
-//             }
-//         }else{
-//             dispatch({
-//                 type:"NO_ACCOUNTS"
-//             })
-//         }
-//     }
-// }
+export const grantView = (idState) => {
+    return async dispatch => {
+        try {
+            const response = idState.map(async id => await obpService.grantView(id))
+            dispatch({
+                type: "GRANT_VIEW",
+                data: response
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
 
 export const revokeConsent = () => {
     return async dispatch => {

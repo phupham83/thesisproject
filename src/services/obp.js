@@ -21,4 +21,9 @@ const getBalance = async (bankid) => {
     return response.data
 }
 
-export default { getConsent, getAccounts, getTransactions, getBalance }
+const grantView = async id => {
+    const response = await axios.post(baseUrl + "/grantView", id)
+    return response.data
+}
+
+export default { getConsent, getAccounts, getTransactions, getBalance, grantView }

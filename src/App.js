@@ -5,10 +5,11 @@ import Transaction from "./components/Transaction"
 import Login from "./components/users/Login"
 import Logout from "./components/users/Logout"
 import SignUp from "./components/users/SignUp"
-import Consent from "./components/Consent"
+import Consent from "./components/consents/Consent"
 import Accounts from "./components/Accounts"
 import Message from "./components/Message"
 import Home from "./components/Home"
+import ChooseBank from "./components/consents/ChooseBank"
 import { localLogin  } from "./reducers/userReducer"
 
 import {
@@ -100,6 +101,9 @@ const App = () => {
                         </Route>
                         <Route path = "/consent">
                             <Consent/>
+                        </Route>
+                        <Route path = "/choose_bank">
+                            <ChooseBank/>
                         </Route>
                         <Route exact path ="/">
                             <Home />

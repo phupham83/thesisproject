@@ -3,9 +3,8 @@ const messageReducer = (state = null, action) => {
     case "SET_MESSAGE":
         return action.data
     default:
-        console.log("")
+        return state
     }
-    return state
 }
 
 export const setMessage = (message) => {
