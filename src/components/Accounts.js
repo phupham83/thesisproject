@@ -1,19 +1,23 @@
-import React, { useEffect } from "react"
+import React from "react"
+import { useHistory } from "react-router"
 import { useDispatch, useSelector } from "react-redux"
-import {  getAccounts, revokeConsent } from "../reducers/userReducer"
+import { revokeConsentSingle } from "../reducers/userReducer"
 import Loading from "./Loading"
 import Button from "./utils/Button"
 import NoAccounts from "./transactions/NoAccounts"
 
 const Accounts = () => {
+    const history = useHistory()
     const dispatch = useDispatch()
     const user = useSelector(state => state.user)
-    useEffect(() => {
-        dispatch(getAccounts(user))
-    }, [])
-    const handleRevoke = (event) => {
+    const handleAddAccount = (event) => {
         event.preventDefault()
-        dispatch(revokeConsent())
+        history.push("/consent")
+    }
+    const handleRevokeAccount = ( account, bank ) => {
+        console.log(account)
+        console.log(bank)
+        dispatch(revokeConsentSingle(account, bank))
     }
     return(
         <div>
@@ -22,17 +26,18 @@ const Accounts = () => {
                 <div>
                     <div className = "bg-white shadow-xl rounded-lg w-1/2">
                         <ul className="divide-y divide-gray-300">
-                            {user.accounts ?
-                                user.accounts.map(account =>
-                                    <li key = {account.id} className="p-4 hover:bg-gray-50 cursor-pointer">
-                                        {account.bank_id}
+                            {user.accountIds ?
+                                user.accountIds.map(account =>
+                                    <li key = {account.account} className="p-4 hover:bg-gray-50 cursor-pointer">
+                                        Bank: {account.bank} <br/>
+                                        Account: {account.account} <Button cb = {() => handleRevokeAccount(account.account, account.bank)} text ="Revoke Consent Single" />
                                     </li>)
                                 :
                                 <Loading />
                             }
                         </ul>
                     </div>
-                    <Button cb = {handleRevoke} text ="Revoke Consent" />
+                    <Button cb = {handleAddAccount} text ="Add Account" />
                 </div>
                 :
                 <NoAccounts />

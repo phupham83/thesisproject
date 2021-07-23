@@ -35,7 +35,7 @@ const ChooseBank = () => {
     }
     const handleConfirm = (event) => {
         event.preventDefault()
-        dispatch(grantView(stateId))
+        dispatch(grantView(stateId, user.accountIds))
         dispatch(reset())
         history.push("/")
     }
@@ -56,7 +56,7 @@ const ChooseBank = () => {
                     <h1>Choose Banks</h1>
                     {user.accounts.map(account =>
                     {for(let i = 0; banks.length > i; i++ ){
-                        if(banks[i] === account.bank_id){
+                        if(banks[i] === account.bank_id ){
                             return(<div key = {account.id}></div>)
                         }
                     }
@@ -72,15 +72,21 @@ const ChooseBank = () => {
                 :
                 <Loading/>
             }
-
             {filteredAccounts[0] ?
                 <div>
                     <h1>Choose Accounts</h1>
                     {filteredAccounts.map(account =>
-                        <div key = {account.id}>
-                            <input type ="checkbox" name = {account.id} onChange = {handleAccountChoice} value ={account.bank_id} />
-                            {account.id}({account.bank_id})
-                        </div>
+                    {
+                        for(let i = 0; user.accountIds.length > i; i++ ){
+                            if(user.accountIds[i].account === account.id ){
+                                return(<div key = {account.id}></div>)
+                            }
+                        }
+                        return(
+                            <div key = {account.id}>
+                                <input type ="checkbox" name = {account.id} onChange = {handleAccountChoice} value ={account.bank_id} />
+                                {account.id}({account.bank_id})
+                            </div>)}
                     )}
                 </div>
                 :

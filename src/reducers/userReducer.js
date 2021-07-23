@@ -14,15 +14,14 @@ const userReducer = (state = null, action) => {
     case "LOGOUT":
         return null
     case "SIGN_UP":
-        console.log(action.data)
         return state
     case "GET_CONSENT":
-        console.log(action.data)
         return state
     case "GRANT_VIEW":
-        console.log(action.data)
-        return state
+        return { ...state, accountIds: action.data }
     case "REVOKE_CONSENT":
+        return action.data
+    case "REVOKE_CONSENT_SINGLE":
         return action.data
     case "GET_ACCOUNTS":
         return action.data
@@ -142,23 +141,24 @@ export const getAccounts = (user) => {
 }
 
 
+
 export const getTransactions = (user) => {
     return async dispatch => {
         if(user){
             if(user.consent){
                 try {
-                    const data = await obpService.getAccounts()
                     const reducer = (a,b) => {
                         if(a && b){
                             return [...b, ...a]
                         }
                         return b
                     }
-                    const transactionsPromises = data.accounts.map(async (account) => {
-                        const response = await obpService.getBalance(account.bank_id)
-                        const transactions = await obpService.getTransactions(account.bank_id, account.id)
+                    const transactionsPromises = user.accountIds.map(async (account) => {
+                        const singleAccount = await obpService.getSingleAccount(account.bank, account.account)
+                        const response = await obpService.getBalance(account.bank)
+                        const transactions = await obpService.getTransactions(account.bank, account.account)
                         const balances = response.accounts.reduce((initial, item) => {
-                            if(item.account_id === account.id){
+                            if(item.account_id === account.account){
                                 initial.push(item.balances.reduce(reducer))
                                 return initial
                             }else{
@@ -166,7 +166,7 @@ export const getTransactions = (user) => {
                             }
                         },[])
                         return(
-                            { ...account, transactions: transactions.transactions, balances: balances }
+                            { ...singleAccount, transactions: transactions.transactions, balances: balances }
                         )
                     })
                     const results = await Promise.all(transactionsPromises)
@@ -191,13 +191,16 @@ export const getTransactions = (user) => {
     }
 }
 
-export const grantView = (idState) => {
+export const grantView = (idState, accountIds) => {
     return async dispatch => {
         try {
-            const response = idState.map(async id => await obpService.grantView(id))
+            await userService.addAccounts([...accountIds, ...idState])
+            const viewPromises = idState.map(async id => await obpService.grantView(id))
+            await Promise.all(viewPromises)
+            await
             dispatch({
                 type: "GRANT_VIEW",
-                data: response
+                data: [...accountIds, ...idState]
             })
         } catch (e) {
             console.log(e)
@@ -211,6 +214,21 @@ export const revokeConsent = () => {
             const response = await userService.revoke()
             dispatch({
                 type: "REVOKE_CONSENT",
+                data: response
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const revokeConsentSingle = (account, bank) => {
+    return async dispatch => {
+        try {
+            await obpService.revokeView({ account:account, bank:bank })
+            const response = await userService.revokeSingle({ account: account })
+            dispatch({
+                type: "REVOKE_CONSENT_SINGLE",
                 data: response
             })
         } catch (e) {

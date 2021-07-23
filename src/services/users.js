@@ -26,5 +26,15 @@ const revoke = async () => {
     return response.data
 }
 
+const revokeSingle = async (account) => {
+    const response = await axios.put("/api/users/revokeSingle", account)
+    return response.data
+}
 
-export default { login, signup, localLogin, logOut, revoke }
+const addAccounts = async accountIds => {
+    const response = await axios.put("/api/users/addAccounts", accountIds)
+    return response.data
+}
+
+
+export default { login, signup, localLogin, logOut, revoke, addAccounts,revokeSingle }
