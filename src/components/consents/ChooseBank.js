@@ -60,6 +60,11 @@ const ChooseBank = () => {
                             return(<div key = {account.id}></div>)
                         }
                     }
+                    for(let i = 0; user.accountIds.length > i; i++ ){
+                        if(user.accountIds[i].account === account.id ){
+                            return(<div key = {account.id}></div>)
+                        }
+                    }
                     banks.push(account.bank_id)
                     return(
                         <div key = {account.id}>
