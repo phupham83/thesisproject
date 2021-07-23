@@ -9,7 +9,7 @@ import Consent from "./components/consents/Consent"
 import Accounts from "./components/Accounts"
 import Message from "./components/Message"
 import Home from "./components/Home"
-import ChooseBank from "./components/consents/ChooseBank"
+import Choose from "./components/consents/Choose"
 import { localLogin  } from "./reducers/userReducer"
 
 import {
@@ -102,8 +102,8 @@ const App = () => {
                         <Route path = "/consent">
                             <Consent/>
                         </Route>
-                        <Route path = "/choose_bank">
-                            <ChooseBank/>
+                        <Route path = "/choose">
+                            <Choose/>
                         </Route>
                         <Route exact path ="/">
                             <Home />

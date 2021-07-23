@@ -19,10 +19,10 @@ const AllAccounts = ({ transactions , totalBalance }) => {
         const dates = transactions.map(transaction => transaction.details.completed)
         const balanceList = transactions.map(transaction => transaction.details.new_balance.amount)
         const data ={
-            labels : dates,
+            labels : dates.reverse(),
             datasets: [{
                 label: "Balance (EUR)",
-                data: balanceList,
+                data: balanceList.reverse(),
                 fill: false,
                 lineTension: 0.5,
                 backgroundColor: "rgb(255, 99, 132)",

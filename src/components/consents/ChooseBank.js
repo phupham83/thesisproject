@@ -1,21 +1,10 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { useHistory } from "react-router"
-import Button from "../utils/Button"
-import Loading from "../Loading"
-import { setBank, removeBank, setAccount, removeAccount, reset } from "../../reducers/choiceReducer"
-import { grantView } from "../../reducers/userReducer"
-import { getAccounts } from "../../reducers/userReducer"
+import { setBank, removeBank } from "../../reducers/choiceReducer"
 
 const ChooseBank = () => {
     const dispatch = useDispatch()
-    const history = useHistory()
     const user = useSelector(state => state.user)
-    useEffect(() => {
-        dispatch(getAccounts(user))
-    }, [])
-    const banksChoice = useSelector(state => state.choice.banks)
-    const stateId = useSelector(state => state.choice.accounts)
     const handleBankChoice = (event) => {
         const bank = event.target.name
         if(event.target.checked === true){
@@ -24,79 +13,37 @@ const ChooseBank = () => {
             dispatch(removeBank(bank))
         }
     }
-    const handleAccountChoice = (event) => {
-        const account = event.target.name
-        const bank = event.target.value
-        if(event.target.checked === true){
-            dispatch(setAccount(account, bank))
-        }else{
-            dispatch(removeAccount(account, bank))
-        }
-    }
-    const handleConfirm = (event) => {
-        event.preventDefault()
-        dispatch(grantView(stateId, user.accountIds))
-        dispatch(reset())
-        history.push("/")
-    }
-    const accountsFilter = (accounts, currentAccount) => {
-        for(let i = 0; banksChoice.length > i; i++ ){
-            if(banksChoice[i] === currentAccount.bank_id){
-                accounts.push(currentAccount)
-            }
-        }
-        return accounts
-    }
-    const filteredAccounts = user.accounts ? user.accounts.reduce(accountsFilter, []): []
     let banks =[]
     return(
         <div>
-            {user.accounts ?
-                <div>
-                    <h1>Choose Banks</h1>
+            <h1>Choose Banks</h1>
+            <div className = "bg-white shadow-xl rounded-lg w-1/2">
+                <ul className="divide-y divide-gray-300">
                     {user.accounts.map(account =>
                     {for(let i = 0; banks.length > i; i++ ){
                         if(banks[i] === account.bank_id ){
-                            return(<div key = {account.id}></div>)
+                            return true
                         }
                     }
                     for(let i = 0; user.accountIds.length > i; i++ ){
                         if(user.accountIds[i].account === account.id ){
-                            return(<div key = {account.id}></div>)
+                            return true
                         }
                     }
                     banks.push(account.bank_id)
                     return(
-                        <div key = {account.id}>
-                            <input type ="checkbox" name = {account.bank_id} onChange ={handleBankChoice} />
-                            {account.bank_id}
-                        </div>
+                        <li key = {account.id} className="p-4 hover:bg-gray-50 cursor-pointer">
+                            <label className="flex items-center relative w-max cursor-pointer select-none">
+                                <span className="mr-3">{account.bank_id}</span>
+                                <input type ="checkbox" name = {account.bank_id} onChange ={handleBankChoice}
+                                    className="appearance-none transition-colors cursor-pointer w-14 h-7 rounded-full bg-gray-100"/>
+                                <span className="w-7 h-7 right-7 absolute rounded-full transform transition-transform bg-gray-200" ></span>
+                            </label>
+                        </li>
                     )}
                     )}
-                </div>
-                :
-                <Loading/>
-            }
-            {filteredAccounts[0] ?
-                <div>
-                    <h1>Choose Accounts</h1>
-                    {filteredAccounts.map(account =>
-                    {
-                        for(let i = 0; user.accountIds.length > i; i++ ){
-                            if(user.accountIds[i].account === account.id ){
-                                return(<div key = {account.id}></div>)
-                            }
-                        }
-                        return(
-                            <div key = {account.id}>
-                                <input type ="checkbox" name = {account.id} onChange = {handleAccountChoice} value ={account.bank_id} />
-                                {account.id}({account.bank_id})
-                            </div>)}
-                    )}
-                </div>
-                :
-                <div></div> }
-            <Button cb ={handleConfirm} text ="Confirm"/>
+                </ul>
+            </div>
         </div>
     )
 }
