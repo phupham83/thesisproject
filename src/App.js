@@ -10,6 +10,7 @@ import Accounts from "./components/Accounts"
 import Message from "./components/Message"
 import Home from "./components/Home"
 import Choose from "./components/consents/Choose"
+import Verified from "./components/users/Verified"
 import { localLogin  } from "./reducers/userReducer"
 
 import {
@@ -44,6 +45,13 @@ const App = () => {
                                 <Link to="/login"><span className={btnStyle}>Log in</span></Link>
                             </nav>
                             <SignUp />
+                        </Route>
+                        <Route path ="/verified">
+                            <nav className = {navStyle}>
+                                <Link to="/"><span className={btnStyle}>Home</span></Link>
+                                <Link to="/login"><span className={btnStyle}>Log in</span></Link>
+                            </nav>
+                            <Verified />
                         </Route>
                         <Route exact path ="/">
                             <nav className = {navStyle}>

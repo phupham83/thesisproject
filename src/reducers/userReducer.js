@@ -84,17 +84,16 @@ export const logout = (cb) => {
 export const signup = (email, name, password,cb, messageCb) => {
     return async dispatch => {
         try {
-            const response = await userService.signup({
+            await userService.signup({
                 email, name, password,
             })
             dispatch({
-                type: "SIGN_UP",
-                data: response
+                type: "SIGN_UP"
             })
-            messageCb("Sign up successful")
+            messageCb("Sign up successful, please verifiy your email to continue")
             cb()
         } catch (e) {
-            console.log(e)
+            console.log(e.response.data.error)
             messageCb(e.response.data.error)
         }
     }
