@@ -10,11 +10,11 @@ const Login = () => {
     const history = useHistory()
     const handleLogin = (event) => {
         event.preventDefault()
-        const username = event.target.Username.value
+        const email = event.target.Email.value
         const password = event.target.Password.value
         const cb = () => history.push("/")
         const messageCb = (message) => {dispatch(setMessage(message))}
-        dispatch(login(username,password, cb, messageCb))
+        dispatch(login(email,password, cb, messageCb))
     }
     const inputStyle = "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-blue-300 "
     return (
@@ -23,13 +23,13 @@ const Login = () => {
                 <Message />
                 <form onSubmit={handleLogin} className=" bg-white shadow-md rounded px-8 py-8 pt-8">
                     <div className="px-4 pb-4">
-                        <label htmlFor="text" className="text-sm block font-bold pb-2">USERNAME</label>
+                        <label htmlFor="text" className="text-sm block font-bold pb-2">EMAIL</label>
                         <input
                             type="text"
-                            name="Username"
-                            id ="username"
+                            name="Email"
+                            id ="email"
                             className={inputStyle}
-                            placeholder="John97"
+                            placeholder="John97@gmail.com"
                         />
                     </div>
                     <div className="px-4 pb-4">

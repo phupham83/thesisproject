@@ -19,8 +19,6 @@ const userReducer = (state = null, action) => {
         return state
     case "GRANT_VIEW":
         return { ...state, accountIds: action.data }
-    case "REVOKE_CONSENT":
-        return action.data
     case "REVOKE_CONSENT_SINGLE":
         return action.data
     case "GET_ACCOUNTS":
@@ -36,11 +34,11 @@ const userReducer = (state = null, action) => {
     }
 }
 
-export const login = (username, password, cb, messageCb) => {
+export const login = (email, password, cb, messageCb) => {
     return async dispatch => {
         try {
             const user = await userService.login({
-                username, password,
+                email, password,
             })
             dispatch ({
                 type: "LOGIN",
@@ -48,8 +46,14 @@ export const login = (username, password, cb, messageCb) => {
             })
             cb()
         } catch (exception) {
-            console.log(exception)
-            messageCb("Wrong username or password")
+            if(exception.response.data.error === "User has not verified their email"){
+                messageCb(exception.response.data.error)
+            }else if(exception.response.data.error === "Wrong password"){
+                messageCb(exception.response.data.error)
+            }else{
+                console.log(exception)
+                messageCb("Wrong user")
+            }
         }
     }
 }
@@ -77,11 +81,11 @@ export const logout = (cb) => {
     )
 }
 
-export const signup = (username, name, password,cb, messageCb) => {
+export const signup = (email, name, password,cb, messageCb) => {
     return async dispatch => {
         try {
             const response = await userService.signup({
-                username, name, password,
+                email, name, password,
             })
             dispatch({
                 type: "SIGN_UP",
@@ -139,8 +143,6 @@ export const getAccounts = (user) => {
         }
     }
 }
-
-
 
 export const getTransactions = (user) => {
     return async dispatch => {
@@ -201,20 +203,6 @@ export const grantView = (idState, accountIds) => {
             dispatch({
                 type: "GRANT_VIEW",
                 data: [...accountIds, ...idState]
-            })
-        } catch (e) {
-            console.log(e)
-        }
-    }
-}
-
-export const revokeConsent = () => {
-    return async dispatch => {
-        try {
-            const response = await userService.revoke()
-            dispatch({
-                type: "REVOKE_CONSENT",
-                data: response
             })
         } catch (e) {
             console.log(e)

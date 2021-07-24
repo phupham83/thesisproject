@@ -30,7 +30,7 @@ const Accounts = () => {
                                 user.accountIds.map(account =>
                                     <li key = {account.account} className="p-4 hover:bg-gray-50 cursor-pointer">
                                         Bank: {account.bank} <br/>
-                                        Account: {account.account} <Button cb = {() => handleRevokeAccount(account.account, account.bank)} text ="Revoke Consent Single" />
+                                        Account: {account.account} <Button cb = {() => handleRevokeAccount(account.account, account.bank)} text ="Revoke Consent" />
                                     </li>)
                                 :
                                 <Loading />
