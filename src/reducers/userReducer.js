@@ -81,11 +81,11 @@ export const logout = (cb) => {
     )
 }
 
-export const signup = (email, name, password,cb, messageCb) => {
+export const signup = (email, name, number, password,cb, messageCb) => {
     return async dispatch => {
         try {
             await userService.signup({
-                email, name, password,
+                email, name, number, password,
             })
             dispatch({
                 type: "SIGN_UP"
