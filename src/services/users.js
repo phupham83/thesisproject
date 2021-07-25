@@ -36,5 +36,10 @@ const addAccounts = async accountIds => {
     return response.data
 }
 
+const checkEmailVerified = async email => {
+    const response = await axios.get("/api/users/checkEmailVerified/" + email)
+    return response.data
+}
 
-export default { login, signup, localLogin, logOut, revoke, addAccounts,revokeSingle }
+
+export default { login, signup, localLogin, logOut, revoke, addAccounts,revokeSingle, checkEmailVerified }

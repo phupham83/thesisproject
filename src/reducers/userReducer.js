@@ -13,8 +13,6 @@ const userReducer = (state = null, action) => {
         }
     case "LOGOUT":
         return null
-    case "SIGN_UP":
-        return state
     case "GET_CONSENT":
         return state
     case "GRANT_VIEW":
@@ -79,24 +77,6 @@ export const logout = (cb) => {
         cb()
     }
     )
-}
-
-export const signup = (email, name, number, password,cb, messageCb) => {
-    return async dispatch => {
-        try {
-            await userService.signup({
-                email, name, number, password,
-            })
-            dispatch({
-                type: "SIGN_UP"
-            })
-            messageCb("Sign up successful, please verifiy your email to continue")
-            cb()
-        } catch (e) {
-            console.log(e.response.data.error)
-            messageCb(e.response.data.error)
-        }
-    }
 }
 
 export const getConsent = () => {
@@ -223,5 +203,6 @@ export const revokeConsentSingle = (account, bank) => {
         }
     }
 }
+
 
 export default userReducer
