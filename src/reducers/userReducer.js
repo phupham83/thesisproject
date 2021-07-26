@@ -48,6 +48,8 @@ export const login = (email, password, cb, messageCb) => {
                 messageCb(exception.response.data.error)
             }else if(exception.response.data.error === "Wrong password"){
                 messageCb(exception.response.data.error)
+            }else if(exception.response.data.error === "User has not verified their phone"){
+                messageCb(exception.response.data.error)
             }else{
                 console.log(exception)
                 messageCb("Wrong user")

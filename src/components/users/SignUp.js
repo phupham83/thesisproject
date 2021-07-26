@@ -20,9 +20,9 @@ const SignUp = () => {
     }
     return (
         <section className="App h-screen w-full flex justify-center items-center bg-gray-700 ">
-            <div className="w-full max-w-md bg-gray-800">
+            <div className="w-full max-w-md bg-gray-800 ">
                 <Message/>
-                <p className = "text-white bold ">Step 1. Register your information</p>
+                <p className = "text-white bold md:text-center pb-4">Step 1. Register your information</p>
                 <form onSubmit ={handleSignup} className=" bg-white shadow-md rounded px-8 py-8 pt-8">
                     <div className="px-4 pb-4">
                         <label htmlFor="text" className="text-sm block font-bold pb-2">EMAIL</label>

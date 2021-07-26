@@ -38,10 +38,7 @@ export const verifySMS = (code, cb, messageCb) => {
             dispatch({
                 type: "VERIFY_SMS"
             })
-            console.log(code)
             if (response.SMSverified){
-                console.log(code)
-                messageCb("Sign up successful, please log in to continue")
                 cb()
             }else{
                 console.log(code)
@@ -49,6 +46,8 @@ export const verifySMS = (code, cb, messageCb) => {
             }
         }catch (e) {
             console.log(e)
+            console.log(code)
+            messageCb("Wrong code")
         }
     }
 }
