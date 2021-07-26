@@ -34,11 +34,12 @@ export const checkEmailVerified = (email, cb, messageCb) => {
 export const verifySMS = (code, cb, messageCb) => {
     return async dispatch => {
         try{
+            const response = await userService.verifySMS(code)
             dispatch({
                 type: "VERIFY_SMS"
             })
             console.log(code)
-            if (code === "12346"){
+            if (response.SMSverified){
                 console.log(code)
                 messageCb("Sign up successful, please log in to continue")
                 cb()

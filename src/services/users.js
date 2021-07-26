@@ -41,5 +41,10 @@ const checkEmailVerified = async email => {
     return response.data
 }
 
+const verifySMS = async code => {
+    const response = await axios.get("/api/users/verifySMS/" + code)
+    return response.data
+}
 
-export default { login, signup, localLogin, logOut, revoke, addAccounts,revokeSingle, checkEmailVerified }
+
+export default { login, signup, localLogin, logOut, revoke, addAccounts,revokeSingle, checkEmailVerified, verifySMS }
