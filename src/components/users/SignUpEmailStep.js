@@ -14,7 +14,7 @@ const SignUpEmailStep = () => {
         event.preventDefault()
         const cb = () => history.push("/signUpSMSstep")
         const messageCb = (message) => {dispatch(setMessage(message))}
-        dispatch(checkEmailVerified(signUpEmail, cb, messageCb))
+        dispatch(checkEmailVerified(cb, messageCb))
     }
     return(
         <div>
@@ -26,7 +26,7 @@ const SignUpEmailStep = () => {
                         <div className=" bg-white shadow-md rounded px-8 py-8 pt-8">
                             <p className = "text-black bold ">Please verify your email to continue the sign up process</p>
                             <div className="px-4 pb-4">
-                                <button id ="signup-button" type="button" onClick = {handleCheckVerified} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">I have verified my email</button>
+                                <button id ="signup-button" type="button" onClick = {handleCheckVerified} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-4">I have verified my email</button>
                             </div>
                         </div>
                     </div>

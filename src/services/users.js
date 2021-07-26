@@ -36,8 +36,8 @@ const addAccounts = async accountIds => {
     return response.data
 }
 
-const checkEmailVerified = async email => {
-    const response = await axios.get("/api/users/checkEmailVerified/" + email)
+const checkEmailVerified = async () => {
+    const response = await axios.get("/api/users/checkEmailVerified" )
     return response.data
 }
 

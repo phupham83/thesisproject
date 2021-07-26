@@ -13,10 +13,10 @@ const signUpReducer = (state = null, action) => {
     }
 }
 
-export const checkEmailVerified = (email, cb, messageCb) => {
+export const checkEmailVerified = (cb, messageCb) => {
     return async dispatch => {
         try {
-            const response = await userService.checkEmailVerified(email)
+            const response = await userService.checkEmailVerified()
             dispatch({
                 type: "CHECK_EMAIL_VERIFIED"
             })
