@@ -130,26 +130,11 @@ export const getTransactions = (user) => {
         if(user){
             if(user.consent){
                 try {
-                    const reducer = (a,b) => {
-                        if(a && b){
-                            return [...b, ...a]
-                        }
-                        return b
-                    }
                     const transactionsPromises = user.accountIds.map(async (account) => {
                         const singleAccount = await obpService.getSingleAccount(account.bank, account.account)
-                        const response = await obpService.getBalance(account.bank)
                         const transactions = await obpService.getTransactions(account.bank, account.account)
-                        const balances = response.accounts.reduce((initial, item) => {
-                            if(item.account_id === account.account){
-                                initial.push(item.balances.reduce(reducer))
-                                return initial
-                            }else{
-                                return initial
-                            }
-                        },[])
                         return(
-                            { ...singleAccount, transactions: transactions.transactions, balances: balances }
+                            { ...singleAccount, transactions: transactions.transactions }
                         )
                     })
                     const results = await Promise.all(transactionsPromises)

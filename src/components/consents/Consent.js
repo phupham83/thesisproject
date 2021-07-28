@@ -14,8 +14,13 @@ const Consent = () => {
         <div>
             <div>
                 <h1>Consent confirmation</h1>
-                <p>By accepting you are allowing your data to be accessed</p>
-                <Button cb = {handleConfirm} text ="Confirm" />
+                <h3>You will be transfered to Open Banking Project where the Application will request the following information: </h3>
+                <p>Your account details </p>
+                <p>Your regular payments </p>
+                <p>Your accounts transactions </p>
+                <p>The application would only use these infomation to provide you services. </p>
+                <p>Any indentifying information is removed </p>
+                <Button cb = {handleConfirm} text ="Login to the Open Banking Project " />
             </div>
         </div>
     )

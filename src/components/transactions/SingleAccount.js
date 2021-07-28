@@ -2,7 +2,7 @@ import React from "react"
 import TransactionList from "./TransactionList"
 import { Line } from "react-chartjs-2"
 
-const SingleAccounts = ({ transactions, balances }) => {
+const SingleAccounts = ({ transactions, balance }) => {
     if(transactions[0]){
         transactions = transactions.map(transaction => {
             const date = new Date(transaction.details.completed)
@@ -44,13 +44,10 @@ const SingleAccounts = ({ transactions, balances }) => {
                 <TransactionList transactions = {transactions}/>
             </div>
         )
-    }else if(balances[0]){
+    }else if(balance){
         return (
             <div>
-                {balances.map(balance =>
-                    <h3 key = {balance.amount}>
-                            Balance: {balance.amount}
-                    </h3>)}
+                <h3>{balance.amount}</h3>
                 No recent transactions
             </div>
         )

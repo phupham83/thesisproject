@@ -1,5 +1,5 @@
 import React from "react"
-import Loading from "../Loading"
+import Loading from "../utils/Loading"
 import TransactionList from "./TransactionList"
 import { Line } from "react-chartjs-2"
 
@@ -41,7 +41,8 @@ const AllAccounts = ({ transactions , totalBalance }) => {
                         autoSkip: true,
                         autoSkipPadding: 50,
                     }
-                } },
+                }
+            },
         }
         return(
             <div >

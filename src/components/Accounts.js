@@ -2,7 +2,7 @@ import React from "react"
 import { useHistory } from "react-router"
 import { useDispatch, useSelector } from "react-redux"
 import { revokeConsentSingle } from "../reducers/userReducer"
-import Loading from "./Loading"
+import Loading from "./utils/Loading"
 import Button from "./utils/Button"
 import NoAccounts from "./transactions/NoAccounts"
 

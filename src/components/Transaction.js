@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
-import { useDispatch,useSelector } from "react-redux"
-import { getTransactions, localLogin } from "../reducers/userReducer"
+import { useDispatch, useSelector } from "react-redux"
+import { getTransactions } from "../reducers/userReducer"
 import AllAccounts from "./transactions/AllAccounts"
 import SingleAccounts from "./transactions/SingleAccount"
 import Button from "./utils/Button"
@@ -19,7 +19,6 @@ const Transaction = () => {
     }, [])
     const handleRefresh = (event) => {
         event.preventDefault()
-        dispatch(localLogin())
         dispatch(getTransactions(user))
     }
     const reducer = (a,b) => {
@@ -29,11 +28,7 @@ const Transaction = () => {
         return b
     }
     const sumReducer = (initial,nextValue) => {
-        const reducer = (a,b) => {
-            return a + Number(b.amount)
-        }
-        const sum = nextValue.reduce(reducer,0)
-        return initial + sum
+        return initial + parseFloat(nextValue.amount)
     }
     const accounts = user.accounts ? user.accounts : []
     const allTransactionsArrays = user.accounts ?
@@ -43,14 +38,13 @@ const Transaction = () => {
         : null
 
     const allBalancesArrays = user.accounts ?
-        user.accounts[0].balances ?
-            user.accounts.map(account => account.balances)
+        user.accounts[0].balance ?
+            user.accounts.map(account => account.balance)
             : null
         : null
 
     const allTransactions =  allTransactionsArrays ? allTransactionsArrays.reduce(reducer, []) : []
     const totalBalance = allBalancesArrays ? allBalancesArrays.reduce(sumReducer,0) : 0
-
     return(
         <div>
             <h1>Transactions</h1>
@@ -70,7 +64,7 @@ const Transaction = () => {
                         <Switch>
                             {accounts.map(account =>
                                 <Route path = {"/transactions/" + account.bank_id + "/" + account.id} key = {account.id}>
-                                    <SingleAccounts transactions = {account.transactions} balances = {account.balances}/>
+                                    <SingleAccounts transactions = {account.transactions} balance = {account.balance}/>
                                 </Route>)}
                             <Route path ="/transactions/All_accounts">
                                 <AllAccounts transactions = {allTransactions} totalBalance = {totalBalance}/>

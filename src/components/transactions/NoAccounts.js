@@ -10,7 +10,7 @@ const NoAccounts = () => {
     }
     return(
         <div className ="addAccount">
-            <p>Please add an account to start</p>
+            <h3>Please add an account to start</h3>
             <Button cb ={handleAccountAuth} text ="Add Account"/>
         </div>
     )
