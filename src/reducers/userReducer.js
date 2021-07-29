@@ -159,17 +159,17 @@ export const getTransactions = (user) => {
     }
 }
 
-export const grantView = (idState, accountIds) => {
+export const grantView = (idState, accountIds, cb) => {
     return async dispatch => {
         try {
             await userService.addAccounts([...accountIds, ...idState])
             const viewPromises = idState.map(async id => await obpService.grantView(id))
             await Promise.all(viewPromises)
-            await
             dispatch({
                 type: "GRANT_VIEW",
                 data: [...accountIds, ...idState]
             })
+            cb()
         } catch (e) {
             console.log(e)
         }

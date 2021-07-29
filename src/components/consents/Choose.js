@@ -21,9 +21,9 @@ const Choose = () => {
 
     const handleConfirm = (event) => {
         event.preventDefault()
-        dispatch(grantView(stateId, user.accountIds))
+        const cb = () => history.push("/")
+        dispatch(grantView(stateId, user.accountIds, cb))
         dispatch(reset())
-        history.push("/")
     }
     const accountsFilter = (accounts, currentAccount) => {
         for(let i = 0; banksChoice.length > i; i++ ){

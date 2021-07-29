@@ -21,6 +21,8 @@ const Home = () => {
         }
         return b
     }
+    const hasBalance = user.accounts ?
+        user.accounts[0].balance ? true : false : false
     const allTransactionsArrays = user.accounts ?
         user.accounts[0].transactions ?
             user.accounts.map(account => account.transactions)
@@ -143,7 +145,10 @@ const Home = () => {
                 <div>
                     <div >
                         {totalExpenses === 0 ?
-                            <Loading />
+                            hasBalance === false ?
+                                <Loading />
+                                :
+                                <h3>No recent transactions</h3>
                             :
                             <div >
                                 <div className ="inline-block h-300px w-300px">
