@@ -36,6 +36,11 @@ const addAccounts = async accountIds => {
     return response.data
 }
 
+const changeNumber = async number => {
+    const response = await axios.put("/api/users/changeNumber", number)
+    return response.data
+}
+
 const checkEmailVerified = async () => {
     const response = await axios.get("/api/users/checkEmailVerified" )
     return response.data
@@ -46,5 +51,9 @@ const verifySMS = async code => {
     return response.data
 }
 
+const reSendSMS = async () => {
+    const response = await axios.get("/api/users/reSendSMS")
+    return response.data
+}
 
-export default { login, signup, localLogin, logOut, revoke, addAccounts,revokeSingle, checkEmailVerified, verifySMS }
+export default { login, signup, localLogin, logOut, revoke, addAccounts,revokeSingle, checkEmailVerified, verifySMS,reSendSMS, changeNumber }

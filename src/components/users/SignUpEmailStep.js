@@ -24,9 +24,11 @@ const SignUpEmailStep = () => {
                         <Message/>
                         <p className = "text-white bold md:text-center pb-4">Step 2. Email Verification</p>
                         <div className=" bg-white shadow-md rounded px-8 py-8 pt-8">
-                            <p className = "text-black bold ">Please verify your email to continue the sign up process</p>
                             <div className="px-4 pb-4">
-                                <button id ="signup-button" type="button" onClick = {handleCheckVerified} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-4">I have verified my email</button>
+                                <p className = "text-black bold">Please verify your email to continue the sign up process</p>
+                            </div>
+                            <div className="px-4 pb-4">
+                                <button id ="signup-button" type="button" onClick = {handleCheckVerified} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ">I have verified my email</button>
                             </div>
                         </div>
                     </div>

@@ -8,6 +8,10 @@ const signUpReducer = (state = null, action) => {
         return state
     case "VERIFY_SMS":
         return state
+    case "CHANGE_NUMBER":
+        return state
+    case "RESEND_SMS":
+        return state
     default:
         return state
     }
@@ -52,6 +56,42 @@ export const verifySMS = (code, cb, messageCb) => {
     }
 }
 
+export const reSendSMS = (messageCb) => {
+    return async dispatch => {
+        try {
+            const response = await userService.reSendSMS()
+            dispatch({
+                type: "RESEND_SMS"
+            })
+            if(response.sent){
+                messageCb("Code Sent")
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const changeNumber = (number,cb, messageCb) => {
+    return async dispatch => {
+        try {
+            const response = await userService.changeNumber( { number })
+            dispatch({
+                type: "CHANGE_NUMBER"
+            })
+            if(response.numberChanged){
+                messageCb("Number Changed")
+                cb()
+            }
+        } catch (e) {
+            console.log(e)
+            if(e.response.data.error){
+                messageCb(e.response.data.error)
+            }
+        }
+    }
+}
+
 export const signup = (email, name, number, password,cb, messageCb) => {
     return async dispatch => {
         try {
@@ -65,7 +105,9 @@ export const signup = (email, name, number, password,cb, messageCb) => {
             cb()
         } catch (e) {
             console.log(e.response.data.error)
-            messageCb(e.response.data.error)
+            if(e.response.data.error){
+                messageCb(e.response.data.error)
+            }
         }
     }
 }

@@ -15,6 +15,7 @@ import Choose from "./components/consents/Choose"
 import Verified from "./components/users/Verified"
 import SignUpSMSstep from "./components/users/SignUpSMSstep"
 import SignUpEmailStep from "./components/users/SignUpEmailStep"
+import ChangeNumber from "./components/users/ChangeNumber"
 import { localLogin  } from "./reducers/userReducer"
 
 
@@ -92,6 +93,14 @@ const App = () => {
                                 <Link to="/about"><span className={btnStyle}>About</span></Link>
                             </nav>
                             <SignUpSMSstep />
+                        </Route>
+                        <Route path = "/changeNumber">
+                            <nav className = {navStyle}>
+                                <Link to="/"><span className={btnStyle}>Home</span></Link>
+                                <Link to="/login"><span className={btnStyle}>Log in</span></Link>
+                                <Link to="/about"><span className={btnStyle}>About</span></Link>
+                            </nav>
+                            <ChangeNumber />
                         </Route>
                         <Route path = "*">
                             <nav className = {navStyle}>
