@@ -165,7 +165,8 @@ const Home = () => {
                     <p>You can start by checking the Accounts you have added to the Application</p>
                     <p>Or look at your Transactions</p>
                 </div>
-                : <NoAccounts /> }
+                : <NoAccounts />
+            }
         </div>
     )
 }

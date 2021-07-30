@@ -36,7 +36,7 @@ const Transaction = () => {
             user.accounts.map(account => account.transactions)
             : null
         : null
-
+    console.log(allTransactionsArrays)
     const allBalancesArrays = user.accounts ?
         user.accounts[0].balance ?
             user.accounts.map(account => account.balance)
@@ -57,7 +57,7 @@ const Transaction = () => {
                             </Link>
                             {accounts.map(account =>
                                 <Link to = {"/transactions/" + account.bank_id + "/" + account.id} key ={account.id}>
-                                    <Button text ={account.bank_id} />
+                                    <Button text ={account.bank.full_name} />
                                 </Link>)}
                             <Button cb = { handleRefresh } text ="Refresh" />
                         </div>

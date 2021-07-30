@@ -26,6 +26,11 @@ const getBalance = async (bankid) => {
     return response.data
 }
 
+const getBank = async (bankid) => {
+    const response = await axios.get(baseUrl + "/getBank/" + bankid)
+    return response.data
+}
+
 const grantView = async id => {
     const response = await axios.post(baseUrl + "/grantView", id)
     return response.data
@@ -36,4 +41,4 @@ const revokeView = async id => {
     return response.data
 }
 
-export default { getConsent, getAccounts, getTransactions, getBalance, grantView, getSingleAccount, revokeView }
+export default { getConsent, getAccounts, getTransactions, getBalance, grantView, getSingleAccount, revokeView, getBank }
