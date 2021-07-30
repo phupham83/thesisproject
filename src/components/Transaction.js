@@ -5,6 +5,7 @@ import AllAccounts from "./transactions/AllAccounts"
 import SingleAccounts from "./transactions/SingleAccount"
 import Button from "./utils/Button"
 import NoAccounts from "./transactions/NoAccounts"
+import TimeFilter from "./utils/TimeFilter"
 import {
     BrowserRouter as Router,
     Switch, Route, Link
@@ -14,6 +15,7 @@ import {
 const Transaction = () => {
     const dispatch = useDispatch()
     const user = useSelector(state => state.user)
+    const timeFilter = useSelector(state => state.timeFilter)
     useEffect(() => {
         dispatch(getTransactions(user))
     }, [])
@@ -36,7 +38,6 @@ const Transaction = () => {
             user.accounts.map(account => account.transactions)
             : null
         : null
-    console.log(allTransactionsArrays)
     const allBalancesArrays = user.accounts ?
         user.accounts[0].balance ?
             user.accounts.map(account => account.balance)
@@ -60,17 +61,19 @@ const Transaction = () => {
                                     <Button text ={account.bank.full_name} />
                                 </Link>)}
                             <Button cb = { handleRefresh } text ="Refresh" />
+                            <span>Time period: </span>
+                            <TimeFilter />
                         </div>
                         <Switch>
                             {accounts.map(account =>
                                 <Route path = {"/transactions/" + account.bank_id + "/" + account.id} key = {account.id}>
-                                    <SingleAccounts transactions = {account.transactions} balance = {account.balance}/>
+                                    <SingleAccounts transactions = {account.transactions} balance = {account.balance} timeFilter = {timeFilter}/>
                                 </Route>)}
                             <Route path ="/transactions/All_accounts">
-                                <AllAccounts transactions = {allTransactions} totalBalance = {totalBalance}/>
+                                <AllAccounts transactions = {allTransactions} totalBalance = {totalBalance} timeFilter = {timeFilter}/>
                             </Route>
                             <Route exact path ="/transactions">
-                                <AllAccounts transactions = {allTransactions} totalBalance = {totalBalance}/>
+                                <AllAccounts transactions = {allTransactions} totalBalance = {totalBalance} timeFilter = {timeFilter}/>
                             </Route>
                         </Switch>
                     </Router>

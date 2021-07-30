@@ -1,4 +1,3 @@
-
 const choiceReducer = (state = { banks:[] , accounts :[] }, action) => {
     let newState = {}
     switch (action.type){

@@ -3,7 +3,7 @@ import Loading from "../utils/Loading"
 import TransactionList from "./TransactionList"
 import { Line } from "react-chartjs-2"
 
-const AllAccounts = ({ transactions , totalBalance }) => {
+const AllAccounts = ({ transactions , totalBalance, timeFilter }) => {
     if(transactions[0]){
         transactions.sort((a,b) => {
             return new Date(b.details.completed) - new Date(a.details.completed)
@@ -16,8 +16,36 @@ const AllAccounts = ({ transactions , totalBalance }) => {
             const newDate =  date.getFullYear()+"-" + (date.getMonth()+1) + "-"+date.getDate()
             return { ...transaction, details: { ...transaction.details, completed: newDate , new_balance: { ...transaction.details.new_balance, amount: newBalance.toFixed(2) } } }
         })
-        const dates = transactions.map(transaction => transaction.details.completed)
-        const balanceList = transactions.map(transaction => transaction.details.new_balance.amount)
+        const filterTransactions = (transactions, time) => {
+            const dateNow = new Date()
+            if(time === "Today"){
+                return(transactions.filter(transaction => {
+                    const date = new Date(transaction.details.completed)
+                    return(
+                        date.getFullYear() === dateNow.getFullYear() && date.getMonth() === dateNow.getMonth() && date.getDate() === dateNow.getDate()
+                    )
+                }))
+            }else if(time === "This month"){
+                return(transactions.filter(transaction => {
+                    const date = new Date(transaction.details.completed)
+                    return(
+                        date.getFullYear() === dateNow.getFullYear() && date.getMonth() === dateNow.getMonth()
+                    )
+                }))
+            }else if(time === "This year"){
+                return(transactions.filter(transaction => {
+                    const date = new Date(transaction.details.completed)
+                    return(
+                        date.getFullYear() === dateNow.getFullYear()
+                    )
+                }))
+            }else if(time === "All"){
+                return transactions
+            }
+        }
+        const filteredTransactions = filterTransactions(transactions, timeFilter)
+        const dates = filteredTransactions.map(transaction => transaction.details.completed)
+        const balanceList = filteredTransactions.map(transaction => transaction.details.new_balance.amount)
         const data ={
             labels : dates.reverse(),
             datasets: [{
@@ -44,19 +72,28 @@ const AllAccounts = ({ transactions , totalBalance }) => {
                 }
             },
         }
-        return(
-            <div >
-                <div style ={{ height: "500px", width: "1000px" }} >
-                    <Line data={data} options={options} />
+        if(filteredTransactions.length !== 0){
+            return(
+                <div >
+                    <h3>{`Balance: €${totalBalance}`}</h3>
+                    <div style ={{ height: "500px", width: "1000px" }} >
+                        <Line data={data} options={options} />
+                    </div>
+                    <TransactionList transactions = {filteredTransactions}/>
                 </div>
-                <TransactionList transactions = {transactions}/>
-            </div>
-
-        )
+            )
+        }else {
+            return (
+                <div>
+                    <h3>{`Balance: €${totalBalance}`}</h3>
+                    {`No transactions ${timeFilter}`}
+                </div>
+            )
+        }
     }else if(totalBalance){
         return (
             <div>
-                <h3>Balance: {totalBalance}</h3>
+                <h3>{`Balance: €${totalBalance}`}</h3>
                 No recent transactions
             </div>
         )

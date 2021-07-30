@@ -4,11 +4,13 @@ import NoAccounts from "./transactions/NoAccounts"
 import { getTransactions } from "../reducers/userReducer"
 import { Doughnut } from "react-chartjs-2"
 import Loading from "./utils/Loading"
+import TimeFilter from "./utils/TimeFilter"
 
 
 const Home = () => {
     const dispatch = useDispatch()
     const user = useSelector(state => state.user)
+    const timeFilter = useSelector(state => state.timeFilter)
     useEffect(() => {
         dispatch(getTransactions(user))
     }, [])
@@ -30,14 +32,44 @@ const Home = () => {
         : null
     const allTransactions =  allTransactionsArrays ? allTransactionsArrays.reduce(reducer, []) : []
 
-    const allExpensesArrays = allTransactions ?
-        allTransactions.filter(transaction => parseFloat(transaction.details.value.amount) < 0)
+    const filterTransactions = (transactions, time) => {
+        const dateNow = new Date()
+        if(time === "Today"){
+            return(transactions.filter(transaction => {
+                const date = new Date(transaction.details.completed)
+                return(
+                    date.getFullYear() === dateNow.getFullYear() && date.getMonth() === dateNow.getMonth() && date.getDate() === dateNow.getDate()
+                )
+            }))
+        }else if(time === "This month"){
+            return(transactions.filter(transaction => {
+                const date = new Date(transaction.details.completed)
+                return(
+                    date.getFullYear() === dateNow.getFullYear() && date.getMonth() === dateNow.getMonth()
+                )
+            }))
+        }else if(time === "This year"){
+            return(transactions.filter(transaction => {
+                const date = new Date(transaction.details.completed)
+                return(
+                    date.getFullYear() === dateNow.getFullYear()
+                )
+            }))
+        }else if(time === "All"){
+            return transactions
+        }
+    }
+
+    const filteredTransactions = filterTransactions(allTransactions, timeFilter)
+
+    const allExpensesArrays = filteredTransactions ?
+        filteredTransactions.filter(transaction => parseFloat(transaction.details.value.amount) < 0)
         : null
     const allExpenses = allExpensesArrays ? allExpensesArrays.map(expense => expense.details.value.amount) : []
     const totalExpenses = allExpenses ? allExpenses.reduce(sumReducer,0) : 0
 
-    const allIncomesArrays = allTransactions ?
-        allTransactions.filter(transaction => parseFloat(transaction.details.value.amount) > 0)
+    const allIncomesArrays = filteredTransactions ?
+        filteredTransactions.filter(transaction => parseFloat(transaction.details.value.amount) > 0)
         : null
     const allIncomes = allIncomesArrays ? allIncomesArrays.map(expense => expense.details.value.amount) : []
     const totalIncomes = allIncomes ? allIncomes.reduce(sumReducer,0) : 0
@@ -91,44 +123,11 @@ const Home = () => {
                     "rgba(153, 102, 255, 1)",
                     "rgba(255, 159, 64, 1)",
                 ],
-                borderWidth: 1,
+                borderWidth: 1.5,
             },
         ],
     }
 
-    const pluginsExpenses = [{
-        beforeDraw: function(chart) {
-            var width = chart.width,
-                height = chart.height,
-                ctx = chart.ctx
-            ctx.restore()
-            var fontSize = (height / 200).toFixed(2)
-            ctx.font = fontSize + "em sans-serif"
-            ctx.textBaseline = "top"
-            var text = `-£${-totalExpenses.toFixed(2)}`,
-                textX = Math.round((width - ctx.measureText(text).width) / 2),
-                textY = height / 2.1
-            ctx.fillText(text, textX, textY)
-            ctx.save()
-        }
-    }]
-
-    const pluginsIncomes = [{
-        beforeDraw: function(chart) {
-            var width = chart.width,
-                height = chart.height,
-                ctx = chart.ctx
-            ctx.restore()
-            var fontSize = (height / 200).toFixed(2)
-            ctx.font = fontSize + "em sans-serif"
-            ctx.textBaseline = "top"
-            var text = `+£${totalIncomes.toFixed(2)}`,
-                textX = Math.round((width - ctx.measureText(text).width) / 2),
-                textY = height / 2.1
-            ctx.fillText(text, textX, textY)
-            ctx.save()
-        }
-    }]
 
     const options= {
         plugins: {
@@ -144,21 +143,26 @@ const Home = () => {
             {user.consent ?
                 <div>
                     <div >
-                        {totalExpenses === 0 ?
+                        {filteredTransactions.length === 0 ?
                             hasBalance === false ?
                                 <Loading />
                                 :
-                                <h3>No recent transactions</h3>
+                                <div>
+                                    <h3>{`No recent transactions ${timeFilter}`}</h3>
+                                    <TimeFilter />
+                                </div>
                             :
-                            <div >
-                                <div className ="inline-block h-300px w-300px">
-                                    <Doughnut data={dataIncomes} plugins={pluginsIncomes} options ={options}/>
-                                    <h3 className ="px-20">Income</h3>
+                            <div className ="mt-8">
+                                <div className =" inline-block " style ={{ height: "400px", width: "400px" }} >
+                                    <Doughnut data={dataIncomes} options ={options}/>
+                                    <h3 className ="px-20 pt-6">{`Income: +€${totalIncomes.toFixed(2)}`}</h3>
                                 </div>
-                                <div className ="inline-block h-300px w-300px ml-4" >
-                                    <Doughnut data={dataExpenses} plugins={pluginsExpenses} options ={options}/>
-                                    <h3 className ="px-20">Expenses</h3>
+                                <div className =" inline-block ml-4 " style ={{ height: "400px", width: "400px" }} >
+                                    <Doughnut data={dataExpenses} options ={options}/>
+                                    <h3 className ="px-20 pt-6">{`Expenses: -€${-totalExpenses.toFixed(2)}`}</h3>
                                 </div>
+                                <span>Time period: </span>
+                                <TimeFilter />
                             </div>
                         }
                     </div>

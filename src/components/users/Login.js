@@ -46,7 +46,9 @@ const Login = () => {
                             placeholder="Enter your password"
                         />
                     </div>
-                    <button id ="login-button"type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-4">Login</button>
+                    <button id ="login-button"type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-4">
+                        Login
+                    </button>
                     <button id ="Signup-button"type="button" onClick={handleRedirect} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-8">Sign up</button>
                 </form>
             </div>
