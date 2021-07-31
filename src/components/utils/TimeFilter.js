@@ -12,6 +12,7 @@ const TimeFilter = () => {
     return(
         <select name="time" id="time" onChange ={changeFilter} defaultValue={timeFilter} className="rounded shadow-md h-15 w-30">
             <option value="Today">Today</option>
+            <option value="This week">This week</option>
             <option value="This month">This month</option>
             <option value="This year">This year</option>
             <option value="All">All</option>

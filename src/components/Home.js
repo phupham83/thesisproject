@@ -34,6 +34,10 @@ const Home = () => {
 
     const filterTransactions = (transactions, time) => {
         const dateNow = new Date()
+        const oneJan = new Date(dateNow.getFullYear(),0,1)
+        const numberOfDays = Math.floor((dateNow - oneJan) / (24 * 60 * 60 * 1000))
+        const weekNow = Math.ceil(( dateNow.getDay() + 1 + numberOfDays) / 7)
+
         if(time === "Today"){
             return(transactions.filter(transaction => {
                 const date = new Date(transaction.details.completed)
@@ -47,6 +51,17 @@ const Home = () => {
                 return(
                     date.getFullYear() === dateNow.getFullYear() && date.getMonth() === dateNow.getMonth()
                 )
+            }))
+        }else if(time === "This week"){
+            return(transactions.filter(transaction => {
+                const date = new Date(transaction.details.completed)
+                let weekThen
+                if(date.getFullYear() === dateNow.getFullYear()){
+                    const oneJan = new Date(date.getFullYear(),0,1)
+                    const numberOfDays = Math.floor((date- oneJan) / (24 * 60 * 60 * 1000))
+                    weekThen = Math.ceil(( date.getDay() + 1 + numberOfDays) / 7)
+                    return(weekNow === weekThen)
+                }
             }))
         }else if(time === "This year"){
             return(transactions.filter(transaction => {

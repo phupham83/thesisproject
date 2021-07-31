@@ -4,19 +4,26 @@ import { Line } from "react-chartjs-2"
 
 const SingleAccounts = ({ transactions, balance, timeFilter }) => {
     if(transactions[0]){
-        transactions = transactions.map(transaction => {
-            const date = new Date(transaction.details.completed)
-            const newDate =  date.getFullYear()+"-" + (date.getMonth()+1) + "-"+date.getDate()
-            return { ...transaction, details: { ...transaction.details, completed: newDate } }
-        })
         const filterTransactions = (transactions, time) => {
             const dateNow = new Date()
+            const oneJan = new Date(dateNow.getFullYear(),0,1)
+            const numberOfDays = Math.floor((dateNow - oneJan) / (24 * 60 * 60 * 1000))
+            const weekNow = Math.ceil(( dateNow.getDay() + 1 + numberOfDays) / 7)
             if(time === "Today"){
                 return(transactions.filter(transaction => {
                     const date = new Date(transaction.details.completed)
                     return(
                         date.getFullYear() === dateNow.getFullYear() && date.getMonth() === dateNow.getMonth() && date.getDate() === dateNow.getDate()
                     )
+                }))
+            }else if(time === "This week"){
+                return(transactions.filter(transaction => {
+                    const date = new Date(transaction.details.completed)
+                    let weekThen
+                    const oneJan = new Date(date.getFullYear(),0,1)
+                    const numberOfDays = Math.floor((date - oneJan) / (24 * 60 * 60 * 1000))
+                    weekThen = Math.ceil(( date.getDay() + 1 + numberOfDays) / 7)
+                    return(date.getFullYear() === dateNow.getFullYear() && weekNow === weekThen)
                 }))
             }else if(time === "This month"){
                 return(transactions.filter(transaction => {
@@ -36,7 +43,12 @@ const SingleAccounts = ({ transactions, balance, timeFilter }) => {
                 return transactions
             }
         }
-        const filteredTransactions = filterTransactions(transactions, timeFilter)
+        let filteredTransactions = filterTransactions(transactions, timeFilter)
+        filteredTransactions = filteredTransactions.map(transaction => {
+            const date = new Date(transaction.details.completed)
+            const newDate =  date.getFullYear()+"-" + (date.getMonth()+1) + "-"+date.getDate()
+            return { ...transaction, details: { ...transaction.details, completed: newDate } }
+        })
         const dates = filteredTransactions.map(transaction => transaction.details.completed)
         const balanceList = filteredTransactions.map(transaction => transaction.details.new_balance.amount)
         const data ={
