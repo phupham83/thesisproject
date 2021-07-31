@@ -75,8 +75,8 @@ const AllAccounts = ({ transactions , totalBalance, timeFilter }) => {
         if(filteredTransactions.length !== 0){
             return(
                 <div >
-                    <h3>{`Balance: €${totalBalance}`}</h3>
-                    <div style ={{ height: "500px", width: "1000px" }} >
+                    <h3>{`Balance: €${totalBalance.toFixed(2)}`}</h3>
+                    <div style ={{ height: "500px", width: "1000px" } } className="mb-4">
                         <Line data={data} options={options} />
                     </div>
                     <TransactionList transactions = {filteredTransactions}/>
@@ -85,7 +85,7 @@ const AllAccounts = ({ transactions , totalBalance, timeFilter }) => {
         }else {
             return (
                 <div>
-                    <h3>{`Balance: €${totalBalance}`}</h3>
+                    <h3>{`Balance: €${totalBalance.toFixed(2)}`}</h3>
                     {`No transactions ${timeFilter}`}
                 </div>
             )
@@ -93,7 +93,7 @@ const AllAccounts = ({ transactions , totalBalance, timeFilter }) => {
     }else if(totalBalance){
         return (
             <div>
-                <h3>{`Balance: €${totalBalance}`}</h3>
+                <h3>{`Balance: €${totalBalance.toFixed(2)}`}</h3>
                 No recent transactions
             </div>
         )

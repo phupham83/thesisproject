@@ -65,21 +65,50 @@ const Home = () => {
     const allExpensesArrays = filteredTransactions ?
         filteredTransactions.filter(transaction => parseFloat(transaction.details.value.amount) < 0)
         : null
+    const allExpensesBillsArrays = filteredTransactions ?
+        filteredTransactions.filter(transaction => transaction.details.description === "Bills")
+        : null
+    const allExpensesGroceriesArrays = filteredTransactions ?
+        filteredTransactions.filter(transaction => transaction.details.description === "Groceries")
+        : null
+    const allExpensesFoodDrinkArrays = filteredTransactions ?
+        filteredTransactions.filter(transaction => transaction.details.description === "Food & Drink")
+        : null
+    const allExpensesTransportArrays = filteredTransactions ?
+        filteredTransactions.filter(transaction => transaction.details.description === "Transport")
+        : null
+
+    const allExpensesBills = allExpensesBillsArrays ? allExpensesBillsArrays.map(expense => expense.details.value.amount) : 0
+    const allExpensesGroceries = allExpensesGroceriesArrays ? allExpensesGroceriesArrays.map(expense => expense.details.value.amount) : 0
+    const allExpensesFoodDrink = allExpensesFoodDrinkArrays ? allExpensesFoodDrinkArrays.map(expense => expense.details.value.amount) : 0
+    const allExpensesTransport = allExpensesTransportArrays ? allExpensesTransportArrays.map(expense => expense.details.value.amount) : 0
     const allExpenses = allExpensesArrays ? allExpensesArrays.map(expense => expense.details.value.amount) : []
-    const totalExpenses = allExpenses ? allExpenses.reduce(sumReducer,0) : 0
+
+    const totalExpenses = allExpenses ? allExpenses.reduce(sumReducer,0): 0
+    const totalExpensesBills = allExpensesBills ? allExpensesBills.reduce(sumReducer,0): 0
+    const totalExpensesGroceries = allExpensesGroceries ? allExpensesGroceries.reduce(sumReducer,0): 0
+    const totalExpensesFoodDrink = allExpensesFoodDrink ? allExpensesFoodDrink.reduce(sumReducer,0): 0
+    const totalExpensesTransport = allExpensesTransport ? allExpensesTransport.reduce(sumReducer,0): 0
+    const generalExpenses = totalExpenses  - totalExpensesBills - totalExpensesGroceries - totalExpensesFoodDrink - totalExpensesTransport
 
     const allIncomesArrays = filteredTransactions ?
         filteredTransactions.filter(transaction => parseFloat(transaction.details.value.amount) > 0)
         : null
-    const allIncomes = allIncomesArrays ? allIncomesArrays.map(expense => expense.details.value.amount) : []
-    const totalIncomes = allIncomes ? allIncomes.reduce(sumReducer,0) : 0
+    const allIncomesIncomeArrays = filteredTransactions ?
+        filteredTransactions.filter(transaction => transaction.details.description === "Income")
+        : null
 
+    const allIncomes = allIncomesArrays ? allIncomesArrays.map(income => income.details.value.amount) : []
+    const allIncomesIncome = allIncomesIncomeArrays ? allIncomesIncomeArrays.map(income => income.details.value.amount) : 0
+    const totalIncomesIncome = allIncomesIncome ? allIncomesIncome.reduce(sumReducer,0) : 0
+    const totalIncomes = allIncomes ? allIncomes.reduce(sumReducer,0) : 0
+    const generalIncomes = totalIncomes - totalIncomesIncome
     const dataExpenses = {
-        labels: ["General expenses", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        labels: ["General expenses", "Bills", "Groceries", "Food & Drink", "Transport", "Orange"],
         datasets: [
             {
                 label: "# of Votes",
-                data: [totalExpenses, 0, 0, 0, 0, 0],
+                data: [generalExpenses, totalExpensesBills, totalExpensesGroceries, totalExpensesFoodDrink, totalExpensesTransport, 0],
                 backgroundColor: [
                     "rgba(255, 99, 132, 0.2)",
                     "rgba(54, 162, 235, 0.2)",
@@ -102,11 +131,11 @@ const Home = () => {
     }
 
     const dataIncomes = {
-        labels: ["Red", "Blue", "Yellow", "General Income", "Purple", "Orange"],
+        labels: ["Red", "Blue", "Yellow", "General Income", "Income", "Orange"],
         datasets: [
             {
                 label: "# of Votes",
-                data: [0, 0, 0, totalIncomes, 0, 0],
+                data: [0, 0, 0, generalIncomes, totalIncomesIncome, 0],
                 backgroundColor: [
                     "rgba(255, 99, 132, 0.2)",
                     "rgba(54, 162, 235, 0.2)",
@@ -138,8 +167,8 @@ const Home = () => {
     }
 
     return(
-        <div>
-            <h1 >Welcome to your budget planner</h1>
+        <div className="p-10">
+            <h1 className ="mb-4">Welcome to your budget planner</h1>
             {user.consent ?
                 <div>
                     <div >

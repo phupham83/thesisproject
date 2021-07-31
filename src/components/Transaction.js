@@ -47,12 +47,12 @@ const Transaction = () => {
     const allTransactions =  allTransactionsArrays ? allTransactionsArrays.reduce(reducer, []) : []
     const totalBalance = allBalancesArrays ? allBalancesArrays.reduce(sumReducer,0) : 0
     return(
-        <div>
-            <h1>Transactions</h1>
+        <div className="p-10">
+            <h1 className ="mb-4">Transactions</h1>
             {user.consent ?
                 <div>
                     <Router>
-                        <div className = "space-x-4" >
+                        <div className = "space-x-4 mb-4" >
                             <Link to = {"/transactions/All_accounts"}>
                                 <Button text ="All Accounts" />
                             </Link>

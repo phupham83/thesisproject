@@ -68,7 +68,7 @@ const SingleAccounts = ({ transactions, balance, timeFilter }) => {
             return(
                 <div >
                     <h3>{`Balance: €${balance.amount}`}</h3>
-                    <div style ={{ height: "500px", width: "1000px" }} >
+                    <div style ={{ height: "500px", width: "1000px" }} className="mb-4">
                         <Line data={data} options={options} />
                     </div>
                     <TransactionList transactions = {filteredTransactions}/>
@@ -77,7 +77,7 @@ const SingleAccounts = ({ transactions, balance, timeFilter }) => {
         }else {
             return (
                 <div>
-                    <h3>{`Balance: €${balance.amount}`}</h3>
+                    <h3>{`Balance: €${balance.amount.toFixed(2)}`}</h3>
                     {`No transactions ${timeFilter}`}
                 </div>
             )
@@ -85,7 +85,7 @@ const SingleAccounts = ({ transactions, balance, timeFilter }) => {
     }else if(balance){
         return (
             <div>
-                <h3>{`Balance: €${balance.amount}`}</h3>
+                <h3>{`Balance: €${balance.amount.toFixed(2)}`}</h3>
                 No recent transactions
             </div>
         )

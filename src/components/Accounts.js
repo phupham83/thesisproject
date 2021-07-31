@@ -22,8 +22,8 @@ const Accounts = () => {
         dispatch(revokeConsentSingle(user, account, bank))
     }
     return(
-        <div>
-            <h1>Accounts</h1>
+        <div className="p-10">
+            <h1 className ="mb-4">Accounts</h1>
             {user.consent ?
                 <div>
                     <div className = "bg-white shadow-xl rounded-lg w-1/2">
@@ -50,7 +50,9 @@ const Accounts = () => {
                             }
                         </ul>
                     </div>
-                    <Button cb = {handleAddAccount} text ="Add Account" />
+                    <div className ="mt-4 ml-4">
+                        <Button cb = {handleAddAccount} text ="Add Account" />
+                    </div>
                 </div>
                 :
                 <NoAccounts />
