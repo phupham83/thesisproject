@@ -90,7 +90,7 @@ const SingleAccounts = ({ transactions, balance, timeFilter }) => {
         }else {
             return (
                 <div>
-                    <h3>{`Balance: €${balance.amount.toFixed(2)}`}</h3>
+                    <h3>{`Balance: €${balance.amount}`}</h3>
                     {`No transactions ${timeFilter}`}
                 </div>
             )
@@ -98,7 +98,7 @@ const SingleAccounts = ({ transactions, balance, timeFilter }) => {
     }else if(balance){
         return (
             <div>
-                <h3>{`Balance: €${balance.amount.toFixed(2)}`}</h3>
+                <h3>{`Balance: €${balance.amount}`}</h3>
                 No recent transactions
             </div>
         )
