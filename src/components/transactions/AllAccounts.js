@@ -93,6 +93,7 @@ const AllAccounts = ({ transactions , totalBalance, timeFilter }) => {
                     <div style ={{ height: "500px", width: "1000px" } } className="mb-4">
                         <Line data={data} options={options} />
                     </div>
+                    <hr className ="mb-8 mt-8"/>
                     <TransactionList transactions = {filteredTransactions}/>
                 </div>
             )

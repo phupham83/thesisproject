@@ -17,7 +17,7 @@ const ChooseAccount = ({ filteredAccounts }) => {
     return(
         <div>
             <h1>Choose Accounts</h1>
-            <div className = "bg-white shadow-xl rounded-lg w-1/2">
+            <div className = "bg-white shadow-xl rounded-lg">
                 <ul className="divide-y divide-gray-300">
                     {filteredAccounts.map(account =>
                     {

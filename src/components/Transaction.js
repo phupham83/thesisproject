@@ -47,12 +47,13 @@ const Transaction = () => {
     const allTransactions =  allTransactionsArrays ? allTransactionsArrays.reduce(reducer, []) : []
     const totalBalance = allBalancesArrays ? allBalancesArrays.reduce(sumReducer,0) : 0
     return(
-        <div className="p-10">
-            <h1 className ="mb-4">Transactions</h1>
+        <div className="flex justify-center">
             {user.consent ?
-                <div>
+                <div className="px-8 py-8 pt-8">
+                    <h1 className ="mb-4">Transactions</h1>
+                    <hr className ="mb-8"/>
                     <Router>
-                        <div className = "space-x-4 mb-4" >
+                        <div className = "space-x-4 mb-8" >
                             <Link to = {"/transactions/All_accounts"}>
                                 <Button text ="All Accounts" />
                             </Link>

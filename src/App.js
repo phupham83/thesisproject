@@ -116,12 +116,12 @@ const App = () => {
                     <nav className = {navStyle}>
                         <img className="w-7 h-7 md:w-10 md:h-10 mr-2 rounded-md overflow-hidden" src="https://therminic2018.eu/wp-content/uploads/2018/07/dummy-avatar.jpg" />
                         <span className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white items-center justify-center">{user.name}</span>
+                        <Link to="/"><span className={btnStyle}>Home</span></Link>
                         <Link to="/transactions"><span className={btnStyle}>Transactions</span></Link>
                         <Link to="/accounts"><span className={btnStyle}>Accounts</span></Link>
-                        <Link to="/"><span className={btnStyle}>Home</span></Link>
                         <Link to="/about"><span className={btnStyle}>About</span></Link>
-                        <div className="block w-px h-6 mx-3 bg-gray-400 dark:bg-gray-700"></div>
-                        <span className={btnStyle}>
+                        <div className="block w-px h-6 mx-3 bg-gray-400 dark:bg-gray-700 "></div>
+                        <span className={btnStyle + "ml-auto"}>
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
                             </svg>

@@ -22,22 +22,22 @@ const Accounts = () => {
         dispatch(revokeConsentSingle(user, account, bank))
     }
     return(
-        <div className="p-10">
-            <h1 className ="mb-4">Accounts</h1>
+        <div className="flex justify-center">
             {user.consent ?
-                <div>
-                    <div className = "bg-white shadow-xl rounded-lg w-1/2">
+                <div className="flex-initial px-8 py-8 pt-8">
+                    <h1 className ="mb-4">Accounts</h1>
+                    <hr className ="mb-8"/>
+                    <div className = "bg-white shadow-xl rounded-lg ">
                         <ul className="divide-y divide-gray-300">
                             {user.accounts ?
                                 user.accounts.map(account =>
                                 {for(let i = 0; user.accountIds.length > i; i++){
                                     if(user.accountIds[i].account === account.id){
                                         return(
-                                            <li key = {account.id} className="p-4 hover:bg-gray-50 cursor-pointer">
-                                                <img className="w-10 h-10 md:w-20 md:h-20 mr-2 rounded-md overflow-hidden inline-block shadow-md" src={account.bank.logo} />
-                                                <div className ="inline-block"><b>{account.bank.full_name}:</b> {account.id}</div>
-                                                <br/>
-                                                <div className ="mt-4">
+                                            <li key = {account.id} className="flex p-4 hover:bg-gray-50 cursor-pointer justify-between items-center">
+                                                <img className="flex-intial w-10 h-10 md:w-20 md:h-20 mr-2 rounded-md overflow-hidden  shadow-md" src={account.bank.logo} />
+                                                <div className ="flex-1 ml-10 mr-10 "><b>{account.bank.full_name}:</b> {account.id}</div>
+                                                <div className ="flex-intial">
                                                     <Button cb = {() => handleRevokeAccount(account.id, account.bank.bank_id)} text ="Revoke Consent" />
                                                 </div>
                                             </li>
@@ -55,7 +55,10 @@ const Accounts = () => {
                     </div>
                 </div>
                 :
-                <NoAccounts />
+                <div>
+                    <h1 className ="mb-4">Accounts</h1>
+                    <NoAccounts />
+                </div>
             }
         </div>
     )

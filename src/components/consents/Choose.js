@@ -35,17 +35,22 @@ const Choose = () => {
     }
     const filteredAccounts = user.accounts ? user.accounts.reduce(accountsFilter, []): []
     return(
-        <div>
-            {user.accounts ?
-                <ChooseBank/>
-                :
-                <Loading/>
-            }
-            {filteredAccounts[0] ?
-                <ChooseAccount filteredAccounts = {filteredAccounts} />
-                :
-                <div></div> }
-            <Button cb ={handleConfirm} text ="Confirm"/>
+        <div className="flex justify-center">
+            <div>
+                {user.accounts ?
+                    <ChooseBank/>
+                    :
+                    <Loading/>
+                }
+                {filteredAccounts[0] ?
+                    <div>
+                        <ChooseAccount filteredAccounts = {filteredAccounts} />
+                        <Button cb ={handleConfirm} text ="Confirm"/>
+                    </div>
+                    :
+                    <div></div> }
+            </div>
+
         </div>
     )
 }

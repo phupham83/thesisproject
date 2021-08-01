@@ -17,7 +17,7 @@ const ChooseBank = () => {
     return(
         <div>
             <h1>Choose Banks</h1>
-            <div className = "bg-white shadow-xl rounded-lg w-1/2">
+            <div className = "bg-white shadow-xl rounded-lg">
                 <ul className="divide-y divide-gray-300">
                     {user.accounts.map(account =>
                     {for(let i = 0; banks.length > i; i++ ){
@@ -33,9 +33,9 @@ const ChooseBank = () => {
                     banks.push(account.bank_id)
                     return(
                         <li key = {account.id} className="p-4 hover:bg-gray-50 cursor-pointer">
-                            <label className="flex items-center relative w-max cursor-pointer select-none">
-                                <img className="w-10 h-10 md:w-20 md:h-20 mr-2 rounded-md overflow-hidden inline-block shadow-md" src={account.bank.logo} />
-                                <span className="mr-3">{account.bank.full_name}</span>
+                            <label className="flex items-center relative w-max cursor-pointer select-none ">
+                                <img className=" w-10 h-10 md:w-20 md:h-20 mr-2 rounded-md overflow-hidden inline-block shadow-md" src={account.bank.logo} />
+                                <span className="mr-3 ">{account.bank.full_name}</span>
                                 <input type ="checkbox" name = {account.bank_id} onChange ={handleBankChoice}
                                     className="appearance-none transition-colors cursor-pointer w-14 h-7 rounded-full bg-gray-100"/>
                                 <span className="w-7 h-7 right-7 absolute rounded-full transform transition-transform bg-gray-200" ></span>
