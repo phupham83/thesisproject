@@ -26,11 +26,10 @@ const Budget = () => {
     const date = new Date()
     const handleBudgetRedirect = (event) => {
         event.preventDefault()
-        user.budget ?
+        user.budget.length !== 0 ?
             history.push("/updateBudget"):
             history.push("/setBudget")
     }
-
     const allTransactionsArrays = user.accounts ?
         user.accounts[0].transactions ?
             user.accounts.map(account => account.transactions)
@@ -73,7 +72,7 @@ const Budget = () => {
     return(
         <div className="flex justify-center">
             {user.consent ?
-                user.budget ?
+                user.budget.length !== 0 ?
                     <div className="px-8 py-8 pt-8">
                         <h1 className ="mb-4">{`Hi ${user.name}, welcome to your budget planner`}</h1>
                         <hr className ="mb-8"/>
@@ -108,8 +107,18 @@ const Budget = () => {
                     <div>
                         <h1 className ="mb-4">{`Hi ${user.name}, welcome to your budget planner`}</h1>
                         <hr className ="mb-8"/>
-                        <p>Set a budget to start</p>
+                        <h3>Budgeting</h3>
+                        <p className= "mb-4" >Take the first step to controlling your finances now by setting a budget.</p>
                         <Button cb ={handleBudgetRedirect} text="Set Budget"/>
+                        <h3 className= "mt-4">Transactions</h3>
+                        <p className= "mb-4" >Check out the transactions of all your accounts in one convinient location.</p>
+                        <Button cb ={() => {history.push("/transactions")}} text="Transactions"/>
+                        <h3 className= "mt-4">Overview</h3>
+                        <p className= "mb-4" >See your transactions categorised here.</p>
+                        <Button cb ={() => {history.push("/overview")}} text="Overview"/>
+                        <h3 className= "mt-4">Accounts</h3>
+                        <p className= "mb-4" >Add or review your accounts.</p>
+                        <Button cb ={() => {history.push("/accounts")}} text="Accounts"/>
                     </div>
                 :
                 <div>
