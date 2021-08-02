@@ -25,6 +25,15 @@ const SingleAccounts = ({ transactions, balance, timeFilter }) => {
                     weekThen = Math.ceil(( date.getDay() + 1 + numberOfDays) / 7)
                     return(date.getFullYear() === dateNow.getFullYear() && weekNow === weekThen)
                 }))
+            }else if(time === "Last week"){
+                return(transactions.filter(transaction => {
+                    const date = new Date(transaction.details.completed)
+                    let weekThen
+                    const oneJan = new Date(date.getFullYear(),0,1)
+                    const numberOfDays = Math.floor((date - oneJan) / (24 * 60 * 60 * 1000))
+                    weekThen = Math.ceil(( date.getDay() + 1 + numberOfDays) / 7)
+                    return(date.getFullYear() === dateNow.getFullYear() && weekNow  === weekThen -1)
+                }))
             }else if(time === "This month"){
                 return(transactions.filter(transaction => {
                     const date = new Date(transaction.details.completed)
@@ -32,11 +41,25 @@ const SingleAccounts = ({ transactions, balance, timeFilter }) => {
                         date.getFullYear() === dateNow.getFullYear() && date.getMonth() === dateNow.getMonth()
                     )
                 }))
+            }else if(time === "Last month"){
+                return(transactions.filter(transaction => {
+                    const date = new Date(transaction.details.completed)
+                    return(
+                        date.getFullYear() === dateNow.getFullYear() && date.getMonth() === (dateNow.getMonth() -1)
+                    )
+                }))
             }else if(time === "This year"){
                 return(transactions.filter(transaction => {
                     const date = new Date(transaction.details.completed)
                     return(
                         date.getFullYear() === dateNow.getFullYear()
+                    )
+                }))
+            }else if(time === "Last year"){
+                return(transactions.filter(transaction => {
+                    const date = new Date(transaction.details.completed)
+                    return(
+                        date.getFullYear() === (dateNow.getFullYear() - 1)
                     )
                 }))
             }else if(time === "All"){

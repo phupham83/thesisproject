@@ -20,6 +20,8 @@ const userReducer = (state = null, action) => {
         return { ...state, accountIds: action.data[0], consent: action.data[1] }
     case "REVOKE_CONSENT_SINGLE":
         return action.data
+    case "SET_BUDGET":
+        return { ...state, budget: action.data }
     case "GET_ACCOUNTS":
         return action.data
     case "NO_ACCOUNTS":
@@ -217,5 +219,19 @@ export const revokeConsentSingle = (user, account, bank) => {
     }
 }
 
+export const setBudget = (budget, cb) => {
+    return async dispatch => {
+        try {
+            const response = await userService.setBudget(budget)
+            dispatch({
+                type: "SET_BUDGET",
+                data: response.budget
+            })
+            cb()
+        } catch (e){
+            console.log(e)
+        }
+    }
+}
 
 export default userReducer

@@ -41,6 +41,11 @@ const changeNumber = async number => {
     return response.data
 }
 
+const setBudget = async budget => {
+    const response = await axios.put("/api/users/setBudget", budget)
+    return response.data
+}
+
 const checkEmailVerified = async () => {
     const response = await axios.get("/api/users/checkEmailVerified" )
     return response.data
@@ -56,4 +61,4 @@ const reSendSMS = async () => {
     return response.data
 }
 
-export default { login, signup, localLogin, logOut, revoke, addAccounts,revokeSingle, checkEmailVerified, verifySMS,reSendSMS, changeNumber }
+export default { login, signup, localLogin, logOut, revoke, addAccounts,revokeSingle, checkEmailVerified, verifySMS,reSendSMS, changeNumber, setBudget }

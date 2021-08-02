@@ -19,7 +19,7 @@ const UnprotectedHome = () => {
                 </div>
             </div>
             <div className="hidden lg:block lg:w-1/2 " >
-                <div className="h-full object-cover bg-hero-pattern">
+                <div className="h-full bg-hero-pattern bg-center bg-no-repeat bg-cover">
                     <div className="h-full bg-black opacity-25"></div>
                 </div>
             </div>
