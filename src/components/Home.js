@@ -58,7 +58,7 @@ const Budget = () => {
             {
                 label: "Actual",
                 data: [-categoriesTotal.totalExpenses, -categoriesTotal.bills, -categoriesTotal.transport, -categoriesTotal.foodDrink, -categoriesTotal.groceries, -categoriesTotal.generalExpense],
-                backgroundColor: "rgba(75, 192, 192, 1)",
+                backgroundColor: "rgba(75, 192, 192, 0.2)",
             },
             {
                 label: "Budget Goal",
