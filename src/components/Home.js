@@ -23,12 +23,16 @@ const Budget = () => {
     }
 
     const daysInMonths = [31,29,31,30,31,30,31,31,30,31,30,31]
+    const months = ["Jan","Feb","Mar","Apr", "May","Jun", "Jul", "Aug","Sep", "Oct", "Nov", "Dec"]
     const date = new Date()
     const handleBudgetRedirect = (event) => {
         event.preventDefault()
         user.budget.length !== 0 ?
             history.push("/updateBudget"):
             history.push("/setBudget")
+    }
+    const sumReducer = (initial,nextValue) => {
+        return initial + parseFloat(nextValue.amount)
     }
     const allTransactionsArrays = user.accounts ?
         user.accounts[0].transactions ?
@@ -37,7 +41,13 @@ const Budget = () => {
         : null
     const allTransactions =  allTransactionsArrays ? allTransactionsArrays.reduce(reducer, []) : []
 
+    const allBalancesArrays = user.accounts ?
+        user.accounts[0].balance ?
+            user.accounts.map(account => account.balance)
+            : null
+        : null
 
+    const totalBalance = allBalancesArrays ? allBalancesArrays.reduce(sumReducer,0) : 0
     const categoriesTotal = setCategories(allTransactions, "This month")
     const totalBudget = user.budget[0] +user.budget[1] +user.budget[2] +user.budget[3] +user.budget[4]
     const data = {
@@ -93,10 +103,13 @@ const Budget = () => {
                                         {`You are over budget by €${-(totalBudget + categoriesTotal.totalExpenses).toFixed(2)}`}
                                     </span>
                                 }
+                                <h2>{`€${totalBalance.toFixed(2)}`}</h2>
+                                <h3 className ="mb-4">{`01 ${months[date.getMonth()]} - ${daysInMonths[date.getMonth()]} ${months[date.getMonth()]} ${date.getFullYear()}`}</h3>
                                 <div className ="mb-8" style ={{ height: "400px", width: "800px" }}>
                                     <Bar data={data} options={options} />
                                 </div>
                                 <hr className ="mb-8"/>
+                                <h3 className ="mb-4">Budget feeling too restrictive ?</h3>
                                 <Button cb ={handleBudgetRedirect} text="Update Budget"/>
                             </div>
                             :
