@@ -47,6 +47,8 @@ const Budget = () => {
             : null
         : null
 
+    const hasBalance = user.accounts ?
+        user.accounts[0].balance ? true : false : false
     const totalBalance = allBalancesArrays ? allBalancesArrays.reduce(sumReducer,0) : 0
     const categoriesTotal = setCategories(allTransactions, "This month")
     const totalBudget = user.budget[0] +user.budget[1] +user.budget[2] +user.budget[3] +user.budget[4]
@@ -113,7 +115,18 @@ const Budget = () => {
                                 <Button cb ={handleBudgetRedirect} text="Update Budget"/>
                             </div>
                             :
-                            <Loading />
+                            hasBalance ?
+                                <div >
+                                    <h2>{`€${totalBalance.toFixed(2)}`}</h2>
+                                    <h3 className ="mb-4">{`01 ${months[date.getMonth()]} - ${daysInMonths[date.getMonth()]} ${months[date.getMonth()]} ${date.getFullYear()}`}</h3>
+                                    <div className ="mb-8" style ={{ height: "400px", width: "800px" }}>
+                                        <Bar data={data} options={options} />
+                                    </div>
+                                    <hr className ="mb-8"/>
+                                    <h3 className ="mb-4">Budget feeling too restrictive ?</h3>
+                                </div>
+                                :
+                                <Loading />
                         }
                     </div>
                     :
