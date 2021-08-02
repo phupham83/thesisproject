@@ -45,11 +45,11 @@ const SetBudget = () => {
     const allTransactions =  allTransactionsArrays ? allTransactionsArrays.reduce(reducer, []) : []
     const categoriesTotal = setCategories(allTransactions, "This month")
     useEffect(() => {
-        dispatch(setBudgetChoice({ name:"Bills", amount:(-categoriesTotal.bills.toFixed(2)) }))
-        dispatch(setBudgetChoice({ name:"FoodandDrink", amount:(-categoriesTotal.foodDrink.toFixed(2)) }))
-        dispatch(setBudgetChoice({ name:"Transport", amount:(-categoriesTotal.transport.toFixed(2)) }))
-        dispatch(setBudgetChoice({ name:"Groceries", amount:(-categoriesTotal.groceries.toFixed(2)) }))
-        dispatch(setBudgetChoice({ name:"GeneralExpense", amount:(-categoriesTotal.generalExpense.toFixed(2)) }))
+        dispatch(setBudgetChoice({ name:"Bills", amount:user.budget[0].toFixed(2) }))
+        dispatch(setBudgetChoice({ name:"FoodandDrink", amount:user.budget[1].toFixed(2) }))
+        dispatch(setBudgetChoice({ name:"Transport", amount:user.budget[2].toFixed(2) }))
+        dispatch(setBudgetChoice({ name:"Groceries", amount:user.budget[3].toFixed(2) }))
+        dispatch(setBudgetChoice({ name:"GeneralExpense", amount:user.budget[4].toFixed(2) }))
     }, [user])
     const inputStyle = " w-full  "
     return(
@@ -81,7 +81,7 @@ const SetBudget = () => {
                                         id ="Bills"
                                         min = "0"
                                         max = "200"
-                                        defaultValue = {String(-categoriesTotal.bills.toFixed(0))}
+                                        defaultValue = {String(user.budget[0].toFixed(2))}
                                         className={inputStyle}
                                         onChange = {handleSetBudgetChoice}
                                     />
@@ -102,7 +102,7 @@ const SetBudget = () => {
                                         id ="FoodandDrink"
                                         min = "0"
                                         max = "200"
-                                        defaultValue = {String(-categoriesTotal.foodDrink.toFixed(0))}
+                                        defaultValue = {String(user.budget[1].toFixed(2))}
                                         className={inputStyle}
                                         onChange = {handleSetBudgetChoice}
                                     />
@@ -124,7 +124,7 @@ const SetBudget = () => {
                                         id ="Transport"
                                         min = "0"
                                         max = "200"
-                                        defaultValue = {String(-categoriesTotal.transport.toFixed(0))}
+                                        defaultValue = {String(user.budget[2].toFixed(2))}
                                         className={inputStyle}
                                         onChange = {handleSetBudgetChoice}
                                     />
@@ -145,7 +145,7 @@ const SetBudget = () => {
                                         id ="Groceries"
                                         min = "0"
                                         max = "200"
-                                        defaultValue = {String(-categoriesTotal.groceries.toFixed(0))}
+                                        defaultValue = {String(user.budget[3].toFixed(2))}
                                         className={inputStyle}
                                         onChange = {handleSetBudgetChoice}
                                     />
@@ -166,7 +166,7 @@ const SetBudget = () => {
                                         id ="GeneralExpense"
                                         min = "0"
                                         max = "200"
-                                        defaultValue = {String(-categoriesTotal.generalExpense.toFixed(0))}
+                                        defaultValue = {String(user.budget[4].toFixed(2))}
                                         className={inputStyle}
                                         onChange = {handleSetBudgetChoice}
                                     />
