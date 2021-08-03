@@ -116,6 +116,7 @@ const Home = () => {
                                 <div>
                                     <h3>{`No recent transactions ${timeFilter}`}</h3>
                                     <TimeFilter />
+                                    <div className ="h-screen"></div>
                                 </div>
                             :
                             <div className ="mt-8">
@@ -233,7 +234,9 @@ const Home = () => {
                 :
                 <div>
                     <h1 className ="mb-4">Overview</h1>
+                    <hr className ="mb-8"/>
                     <NoAccounts />
+                    <div className="h-screen"></div>
                 </div>
             }
         </div>

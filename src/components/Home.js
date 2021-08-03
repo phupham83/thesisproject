@@ -151,6 +151,7 @@ const Budget = () => {
                     <h1 className ="mb-4">{`Hi ${user.name}, welcome to your budget planner`}</h1>
                     <hr className ="mb-8"/>
                     <NoAccounts />
+                    <div className="h-screen"></div>
                 </div>
             }
         </div>
