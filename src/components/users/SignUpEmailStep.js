@@ -2,7 +2,7 @@ import React from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from "react-router"
 import { setMessage } from "../../reducers/messageReducer"
-import { checkEmailVerified } from "../../reducers/signUpReducer"
+import { checkEmailVerified, reSendEmail } from "../../reducers/signUpReducer"
 import { Redirect } from "react-router"
 import Message from "../Message"
 
@@ -15,6 +15,12 @@ const SignUpEmailStep = () => {
         const cb = () => history.push("/signUpSMSstep")
         const messageCb = (message) => {dispatch(setMessage(message))}
         dispatch(checkEmailVerified(cb, messageCb))
+    }
+
+    const handleReSendEmail = (event) => {
+        event.preventDefault()
+        const messageCb = (message) => {dispatch(setMessage(message))}
+        dispatch(reSendEmail( messageCb))
     }
     return(
         <div>
@@ -31,6 +37,9 @@ const SignUpEmailStep = () => {
                                 </div>
                                 <div className="px-4 pb-4">
                                     <button id ="signup-button" type="button" onClick = {handleCheckVerified} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ">I have verified my email</button>
+                                </div>
+                                <div className="px-4 pb-4">
+                                    <button id ="signup-button" type="button" onClick = {handleReSendEmail} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ">Resend Email</button>
                                 </div>
                             </div>
                         </div>

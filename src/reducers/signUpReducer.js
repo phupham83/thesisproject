@@ -12,6 +12,8 @@ const signUpReducer = (state = null, action) => {
         return state
     case "RESEND_SMS":
         return state
+    case "RESEND_EMAIL":
+        return state
     default:
         return state
     }
@@ -65,6 +67,21 @@ export const reSendSMS = (messageCb) => {
             })
             if(response.sent){
                 messageCb("Code Sent")
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+export const reSendEmail = (messageCb) => {
+    return async dispatch => {
+        try {
+            const response = await userService.reSendEmail()
+            dispatch({
+                type: "RESEND_EMAIL"
+            })
+            if(response.sent){
+                messageCb("Email Sent")
             }
         } catch (e) {
             console.log(e)

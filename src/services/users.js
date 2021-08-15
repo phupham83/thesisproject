@@ -61,4 +61,9 @@ const reSendSMS = async () => {
     return response.data
 }
 
-export default { login, signup, localLogin, logOut, revoke, addAccounts,revokeSingle, checkEmailVerified, verifySMS,reSendSMS, changeNumber, setBudget }
+const reSendEmail = async () => {
+    const response = await axios.get("/api/users/reSendEmail")
+    return response.data
+}
+
+export default { login, signup, localLogin, logOut, revoke, addAccounts,revokeSingle, checkEmailVerified, verifySMS,reSendSMS, changeNumber, setBudget,reSendEmail  }
