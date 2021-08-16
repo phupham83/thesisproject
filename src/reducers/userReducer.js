@@ -167,6 +167,7 @@ export const getTransactions = (user) => {
                     })
                     const results = await Promise.all(transactionsPromises)
                     const newUser = { ...user, accounts: results }
+                    console.log(newUser)
                     dispatch({
                         type:"GET_TRANSACTIONS",
                         data: newUser
